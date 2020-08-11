@@ -21,7 +21,11 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,12 +34,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TooManyListenersException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -48,24 +56,31 @@ import javax.swing.border.Border;
  */
 public class TestLayout extends javax.swing.JFrame {
 
-    public int angka = 0;
+    private int sum_pictures = 0;
     int xMouseInDeskTopBackground;
     int yMouseInDeskTopBackground;
     int x2;
     int y2;
 
-    int xMouse1;
-    int yMouse1;
-    int xMouse2;
-    int yMouse2;
+    int xImage_POS;
+    int yImage_POS;
+
     double Coor_ScaleX = 1.55;
     double Coor_ScaleY = 3.65;
+    private String path_local = "src/images/";
+    JLabel jlabels[] = new JLabel[10];
+    String[] jlabels_coordinat = new String[10];
+
+    List<Map<String, Integer>> List_jlabels_stat = new ArrayList<Map<String, Integer>>();
+//    String[] jlabels_stat = new String[10];
+    JOptionPane alertBox = new JOptionPane();
 
     /**
      * Creates new form TestLayout
      */
     public TestLayout() {
         initComponents();
+        setResizable(false);
     }
 
     /**
@@ -78,14 +93,12 @@ public class TestLayout extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new DropPane();
+        drop_zone_panel = new DropPane();
         Image_1 = new javax.swing.JLabel();
         Label_Drop_Image = new javax.swing.JLabel();
+        IMG_OPTIONS = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         checkCustomPath = new javax.swing.JToggleButton();
-        custom_path = new javax.swing.JTextField();
-        custom_path_res = new javax.swing.JLabel();
-        FileTitle = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -99,23 +112,29 @@ public class TestLayout extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(1200, 800));
+        setMinimumSize(new java.awt.Dimension(1200, 800));
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setMaximumSize(new java.awt.Dimension(1245, 750));
-        jPanel2.setMinimumSize(new java.awt.Dimension(1245, 750));
-        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        drop_zone_panel.setBackground(new java.awt.Color(204, 204, 204));
+        drop_zone_panel.setMaximumSize(new java.awt.Dimension(1200, 800));
+        drop_zone_panel.setMinimumSize(new java.awt.Dimension(1200, 800));
+        drop_zone_panel.setPreferredSize(new java.awt.Dimension(1200, 800));
+        drop_zone_panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jPanel2MouseDragged(evt);
+                drop_zone_panelMouseDragged(evt);
             }
         });
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        drop_zone_panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                drop_zone_panelMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel2MousePressed(evt);
+                drop_zone_panelMousePressed(evt);
             }
         });
-        jPanel2.setLayout(null);
+        drop_zone_panel.setLayout(null);
 
         Image_1.setBackground(new java.awt.Color(102, 102, 255));
         Image_1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -138,15 +157,40 @@ public class TestLayout extends javax.swing.JFrame {
             }
         });
         Image_1.setBounds(10, 90, 40, 50);
-        jPanel2.add(Image_1);
-        Image_1.setBounds(20, 30, 140, 110);
+        drop_zone_panel.add(Image_1);
+        Image_1.setBounds(1000, 580, 140, 110);
 
         Label_Drop_Image.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         Label_Drop_Image.setForeground(new java.awt.Color(0, 0, 0));
         Label_Drop_Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_Drop_Image.setText("Drop an Image");
-        jPanel2.add(Label_Drop_Image);
-        Label_Drop_Image.setBounds(370, 450, 460, 60);
+        drop_zone_panel.add(Label_Drop_Image);
+        Label_Drop_Image.setBounds(360, 400, 460, 60);
+
+        IMG_OPTIONS.setMaximumSize(new java.awt.Dimension(120, 140));
+
+        jLabel1.setText("Resize");
+
+        javax.swing.GroupLayout IMG_OPTIONSLayout = new javax.swing.GroupLayout(IMG_OPTIONS);
+        IMG_OPTIONS.setLayout(IMG_OPTIONSLayout);
+        IMG_OPTIONSLayout.setHorizontalGroup(
+            IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(IMG_OPTIONSLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        IMG_OPTIONSLayout.setVerticalGroup(
+            IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(IMG_OPTIONSLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
+
+        drop_zone_panel.add(IMG_OPTIONS);
+        IMG_OPTIONS.setBounds(960, 20, 120, 140);
+        IMG_OPTIONS.setVisible(false);
 
         checkCustomPath.setText("Convert");
         checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
@@ -154,118 +198,70 @@ public class TestLayout extends javax.swing.JFrame {
                 checkCustomPathActionPerformed(evt);
             }
         });
+        drop_zone_panel.add(checkCustomPath);
+        checkCustomPath.setBounds(0, 10, 74, 32);
 
-        custom_path.setText("custom_path....");
-
-        custom_path_res.setText("RES");
-
-        FileTitle.setText("jLabel1");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(checkCustomPath)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(custom_path, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(custom_path_res, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
-                        .addComponent(FileTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkCustomPath)
-                            .addComponent(custom_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(custom_path_res, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(FileTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(drop_zone_panel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void drop_zone_panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMousePressed
+        System.out.println("Jpanel: MOUSE PRESS");
+        xMouseInDeskTopBackground = evt.getX();
+        yMouseInDeskTopBackground = evt.getY();
+    }//GEN-LAST:event_drop_zone_panelMousePressed
+
+    private void drop_zone_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMouseClicked
+        // TODO add your handling code here:
+        IMG_OPTIONS.setVisible(false);
+        for (int i = 0; i < sum_pictures; i++) {
+            Border empty = BorderFactory.createEmptyBorder();
+            jlabels[i].setBorder(empty);
+        }
+    }//GEN-LAST:event_drop_zone_panelMouseClicked
+
+    private void drop_zone_panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        x2 = x;
+        y2 = y;
+        this.setLocation(x - xMouseInDeskTopBackground, y - yMouseInDeskTopBackground);
+    }//GEN-LAST:event_drop_zone_panelMouseDragged
 
     private void checkCustomPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCustomPathActionPerformed
         String namaID = "TEST";
         String namaProject = "ICONBOX";
         String fileName = "SampleIcon";
-        ExportIniFiles exp = new ExportIniFiles();
-        exp.CreateDirectory(namaID, namaProject);
-//        exp.ExportA();
-        exp.PutFileImageinRes(namaID);
-        exp.PutFileINIinPROJECT(namaID, namaProject,fileName);
-        
+        ExportIniFiles exp = new ExportIniFiles(fileName, namaID, namaProject);
+        exp.CreateDirectory();
+        exp.PutFileINIinPROJECT();
+        //        exp.ExportA();
+        exp.PutFileImageinRes(sum_pictures, List_jlabels_stat);
     }//GEN-LAST:event_checkCustomPathActionPerformed
 
+    private void Image_1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MousePressed
+        //        Image_label.setVisible(true);
+        xImage_POS = evt.getX();
+        yImage_POS = evt.getY();
+    }//GEN-LAST:event_Image_1MousePressed
+
     private void Image_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MouseClicked
-//       Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
-//        Image_label.setBorder(grayBorder);
-//        Image_label.setVisible(true);
+        //       Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
+        //        Image_label.setBorder(grayBorder);
+        //        Image_label.setVisible(true);
         System.out.println("Clicked");
     }//GEN-LAST:event_Image_1MouseClicked
 
     private void Image_1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        Image_1.setLocation((int) ((x - x2 - (Image_1.getWidth() / 2)) - (xMouse2 - xMouseInDeskTopBackground)), (int) ((y - y2 - (Image_1.getHeight() / 2)) - (yMouse2 - yMouseInDeskTopBackground)));
-        System.out.println("DRAGImage: " + x + " y: " + y);
-        System.out.println("DRAGx2: " + xMouse2 + " y: " + yMouse2);
-        System.out.println("DRAGDeskTopBG: " + xMouseInDeskTopBackground + " y: " + yMouseInDeskTopBackground);
-//        Image_label.setVisible(true);
+//        Image_1.setLocation((int) ((x - x2 - (Image_1.getWidth() / 2)) - (xMouse2 - xMouseInDeskTopBackground)), (int) ((y - y2 - (Image_1.getHeight() / 2)) - (yMouse2 - yMouseInDeskTopBackground)));
+//        System.out.println("DRAGImage: " + x + " y: " + y);
+//        System.out.println("DRAGx2: " + xMouse2 + " y: " + yMouse2);
+//        System.out.println("DRAGDeskTopBG: " + xMouseInDeskTopBackground + " y: " + yMouseInDeskTopBackground);
+        //        Image_label.setVisible(true);
     }//GEN-LAST:event_Image_1MouseDragged
-
-    private void Image_1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MousePressed
-//        Image_label.setVisible(true);
-        xMouse2 = evt.getX();
-        yMouse2 = evt.getY();
-
-    }//GEN-LAST:event_Image_1MousePressed
-
-    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
-        int x = evt.getXOnScreen();
-        int y = evt.getYOnScreen();
-        x2 = x;
-        y2 = y;
-        this.setLocation(x - xMouseInDeskTopBackground, y - yMouseInDeskTopBackground);
-    }//GEN-LAST:event_jPanel2MouseDragged
-
-    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        xMouseInDeskTopBackground = evt.getX();
-        yMouseInDeskTopBackground = evt.getY();
-    }//GEN-LAST:event_jPanel2MousePressed
 
     /**
      * @param args the command line arguments
@@ -276,22 +272,12 @@ public class TestLayout extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TestLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TestLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TestLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TestLayout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -306,8 +292,127 @@ public class TestLayout extends javax.swing.JFrame {
             }
         });
     }
+// add image with label
 
+    private void onMouseClicked(MouseEvent e) {
+        for (int i = 0; i < jlabels.length; i++) {
+            if (e.getSource() == jlabels[i]) {
+                System.out.println("Label" + i + "was clicked");
+            }
+        }
+    }
+
+    public void AddXYWH(int X, int Y, int W, int H, int id) {
+        Map<String, Integer> jlabels_stat = new HashMap<>();
+        jlabels_stat.put("X", X);
+        jlabels_stat.put("Y", Y);
+        jlabels_stat.put("W", W);
+        jlabels_stat.put("H", H);
+        List_jlabels_stat.add(id, jlabels_stat);
+    }
+
+    public void SetXYWH(int X, int Y, int W, int H, int id) {
+        Map<String, Integer> jlabels_stat = new HashMap<>();
+        System.out.println("Set XY: " + X + " :" + Y);
+        jlabels_stat.put("X", X);
+        jlabels_stat.put("Y", Y);
+        jlabels_stat.put("W", W);
+        jlabels_stat.put("H", H);
+        List_jlabels_stat.set(id, jlabels_stat);
+    }
+
+    public void CreateLabelWithImage(String fileName, int id) {
+        try {
+            System.out.println("IM CALLED?");
+            BufferedImage img = null;
+            img = ImageIO.read(new File(path_local + fileName + ".png"));
+            int Scale = 0;
+            int Pref_Size = 200;
+            if (img.getWidth() > img.getHeight()) {
+                Scale = img.getWidth() / Pref_Size;
+            } else {
+                Scale = img.getHeight() / Pref_Size;
+            }
+            int img_maxwidth = img.getWidth() / Scale;
+            int img_maxheight = img.getHeight() / Scale;
+            Image dimg = img.getScaledInstance(img_maxwidth, img_maxheight, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(dimg);
+            jlabels[id] = new JLabel("Label" + sum_pictures);
+            jlabels[id].setIcon(icon);
+            jlabels[id].setBounds(1, 1 + (sum_pictures * 20), img_maxwidth, img_maxheight);
+            this.AddXYWH(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
+//            jlabels_coordinat[id] = jlabels[id].getX() + "," + jlabels[id].getY();
+            jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+            jlabels[id].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    onMouseClicked(e);
+                }
+            });
+            jlabels[id].addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    int x = e.getXOnScreen();
+                    int y = e.getYOnScreen();
+//                    jlabels[id].setLocation(x-xMouse2,y-yMouse2);
+//                    jlabels[id].setLocation((int) ((x - x2 - (jlabels[id].getWidth() / 2))), (int) ((y - y2 - (jlabels[id].getHeight() / 2))));
+//                    System.out.println("X: " + (int) (x - (jlabels[id].getWidth())));
+//                    System.out.println("Y: " + (int) (y - y2 - yMouse2 + yMouseInDeskTopBackground - (jlabels[id].getHeight() / 2)));
+//                    System.out.println("XIMAGE:" + jlabels[id].getX());
+//                    System.out.println("x: " + x + " ,x2: " + x2 + " ,xmouse: " + xMouse2 + " ,xmouseDesktop: " + xMouseInDeskTopBackground + " ,Jlabels: " + jlabels[id].getWidth());
+//                    jlabels_coordinat[id] = jlabels[id].getX() + "," + jlabels[id].getY();
+                    SetXYWH(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
+                    jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
+//                    jlabels[id].setLocation(x-jlabels[id].getWidth() -xMouse2 ,y-jlabels[id].getHeight() -yMouse2);
+//                    jlabels[id].setLocation((int) (x - x2 - xMouse2 + xMouseInDeskTopBackground - (jlabels[id].getWidth())), (int) ((y - y2 - (jlabels[id].getHeight())) - (yMouse2 + yMouseInDeskTopBackground)));
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                }
+            });
+            jlabels[id].addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
+                    jlabels[id].setBorder(grayBorder);
+                    if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
+                        int x = e.getX();
+                        int y = e.getY();
+                        IMG_OPTIONS.setLocation(x, y);
+                        IMG_OPTIONS.setVisible(true);
+
+                        //System.out.println("Right Worked");
+                    }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    xImage_POS = e.getX();
+                    yImage_POS = e.getY();
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+            drop_zone_panel.add(jlabels[id]);
+            drop_zone_panel.validate();
+            drop_zone_panel.repaint();
+        } catch (Exception e) {
+        }
+    }
 // Something Called JPANEL
+
     public class DropPane extends JPanel {
 
         private DropTarget dropTarget;
@@ -390,32 +495,64 @@ public class TestLayout extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     String path_local = "src/images/";
-                    try {
-                        Label_Drop_Image.setText(null);
-                        FileOutputStream out = null;
-                        FileInputStream in = null;
-                        int cursor;
-                        in = new FileInputStream((File) files.get(0));
-                        out = new FileOutputStream(path_local + "TestImage.png");
-                        while ((cursor = in.read()) != -1) {
-                            out.write(cursor);
+                    if (sum_pictures <= 10) {
+                        try {
+                            Label_Drop_Image.setText(null);
+                            System.out.println("Angka: " + sum_pictures);
+                            System.out.println("files.size(): " + files.size());
+                            if (sum_pictures == 0) {
+                                for (int i = 0; i < files.size(); i++) {
+                                    FileOutputStream out = null;
+                                    FileInputStream in = null;
+                                    int cursor;
+                                    String fileName = "TempImage" + i;
+                                    System.out.println("GAMBAR: " + files.get(i));
+                                    in = new FileInputStream((File) files.get(i));
+                                    out = new FileOutputStream(path_local + fileName + ".png");
+                                    System.out.println("GAMBAR NEXT: " + fileName);
+                                    while ((cursor = in.read()) != -1) {
+                                        out.write(cursor);
+                                    }
+                                    CreateLabelWithImage(fileName, i);
+                                }
+                                sum_pictures = files.size();
+                            } else {
+                                for (int i = sum_pictures; i < (sum_pictures + files.size()); i++) {
+                                    System.out.println("nilai I: " + i);
+                                    FileOutputStream out = null;
+                                    FileInputStream in = null;
+                                    int cursor;
+                                    String fileName = "TempImage" + i;
+                                    System.out.println("GAMBAR: " + files.get(i - sum_pictures));
+                                    in = new FileInputStream((File) files.get(i - sum_pictures));
+                                    out = new FileOutputStream(path_local + fileName + ".png");
+                                    System.out.println("GAMBAR NEXT: " + fileName);
+                                    while ((cursor = in.read()) != -1) {
+                                        out.write(cursor);
+                                    }
+                                    CreateLabelWithImage(fileName, i);
+                                }
+                                sum_pictures += files.size();
+                            }
+
+//                        File pathToFile = new File("TestImage.png");
+//                        boolean exists = pathToFile.exists();
+//                        long fileSize = pathToFile.length();
+//
+//                        BufferedImage img = null;
+//                        img = ImageIO.read(new File(path_local + "TestImage.png"));
+//                        int img_maxwidth = img.getWidth() % 400;
+//                        int img_maxheight = img.getHeight() % 400;
+//                        Image dimg = img.getScaledInstance(img_maxwidth, img_maxheight, Image.SCALE_SMOOTH);
+//                        ImageIcon icon = new ImageIcon(dimg);
+//                        Image_1.setIcon(icon);
+//                        Image_1.setBounds(0, 0, img_maxwidth, img_maxheight);
+//                            FileTitle.setText("You dropped " + files.size());
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-                        File pathToFile = new File("TestImage.png");
-                        boolean exists = pathToFile.exists();
-                        long fileSize = pathToFile.length();
-
-                        BufferedImage img = null;
-                        img = ImageIO.read(new File(path_local + "TestImage.png"));
-                        int img_maxwidth = img.getWidth() % 400;
-                        int img_maxheight = img.getHeight() % 400;
-                        Image dimg = img.getScaledInstance(img_maxwidth, img_maxheight, Image.SCALE_SMOOTH);
-                        ImageIcon icon = new ImageIcon(dimg);
-                        Image_1.setIcon(icon);
-                        Image_1.setBounds(0, 0, img_maxwidth, img_maxheight);
-                        FileTitle.setText("You dropped " + files.size() + " files, SIze: " + fileSize + " EXSIST: " + exists);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } else {
+                        alertBox.showMessageDialog(jFrame1, "Maximum 10 image", "Warning", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             };
@@ -547,14 +684,12 @@ public class TestLayout extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel FileTitle;
+    private javax.swing.JPanel IMG_OPTIONS;
     private javax.swing.JLabel Image_1;
     private javax.swing.JLabel Label_Drop_Image;
     private javax.swing.JToggleButton checkCustomPath;
-    private javax.swing.JTextField custom_path;
-    private javax.swing.JLabel custom_path_res;
+    private javax.swing.JPanel drop_zone_panel;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

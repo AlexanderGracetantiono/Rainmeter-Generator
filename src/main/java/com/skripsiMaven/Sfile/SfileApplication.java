@@ -13,7 +13,7 @@ public class SfileApplication {
 //        SpringApplication.run(SfileApplication.class, args);
         TestLayout screen = new TestLayout();
         screen.setVisible(true);
-        screen.setLocationRelativeTo(null);
+//        screen.setLocationRelativeTo(null);
     }
 
     public static void CreateTempDirectory() {

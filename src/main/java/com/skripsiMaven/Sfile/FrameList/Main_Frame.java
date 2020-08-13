@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.skripsiMaven.Sfile;
+package com.skripsiMaven.Sfile.FrameList;
 
+import com.skripsiMaven.Sfile.Script.Export_Script;
+import com.skripsiMaven.Sfile.Script.Options_Script;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -42,6 +44,7 @@ import java.util.TooManyListenersException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -54,7 +57,7 @@ import javax.swing.border.Border;
  *
  * @author alexa
  */
-public class TestLayout extends javax.swing.JFrame {
+public class Main_Frame extends javax.swing.JFrame {
 
     private int sum_pictures = 0;
     int xMouseInDeskTopBackground;
@@ -78,9 +81,12 @@ public class TestLayout extends javax.swing.JFrame {
     /**
      * Creates new form TestLayout
      */
-    public TestLayout() {
+    public Main_Frame() {
         initComponents();
         setResizable(false);
+        customInit();
+//        setUndecorated(true);
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -94,11 +100,21 @@ public class TestLayout extends javax.swing.JFrame {
 
         jFrame1 = new javax.swing.JFrame();
         drop_zone_panel = new DropPane();
-        Image_1 = new javax.swing.JLabel();
         Label_Drop_Image = new javax.swing.JLabel();
         IMG_OPTIONS = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        RESIZE_LABEL = new javax.swing.JLabel();
+        Change_Color_Label = new javax.swing.JLabel();
+        Jlabel_OPTIONS_ID = new javax.swing.JLabel();
         checkCustomPath = new javax.swing.JToggleButton();
+        SETWIDTH_HEIGHT_DIALOG = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        SET_WIDTH_INPUT = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        SET_HEIGHT_INPUT = new javax.swing.JTextField();
+        RESIZE_ID = new javax.swing.JLabel();
+        SAVE_W_H_LABEL = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -113,11 +129,10 @@ public class TestLayout extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(1200, 800));
         setMinimumSize(new java.awt.Dimension(1200, 800));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        drop_zone_panel.setBackground(new java.awt.Color(204, 204, 204));
+        drop_zone_panel.setBackground(new java.awt.Color(255, 255, 255));
         drop_zone_panel.setMaximumSize(new java.awt.Dimension(1200, 800));
         drop_zone_panel.setMinimumSize(new java.awt.Dimension(1200, 800));
         drop_zone_panel.setPreferredSize(new java.awt.Dimension(1200, 800));
@@ -136,30 +151,6 @@ public class TestLayout extends javax.swing.JFrame {
         });
         drop_zone_panel.setLayout(null);
 
-        Image_1.setBackground(new java.awt.Color(102, 102, 255));
-        Image_1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Image_1.setForeground(new java.awt.Color(0, 0, 0));
-        Image_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Image_1.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
-        Image_1.setMaximumSize(new java.awt.Dimension(400, 400));
-        Image_1.setMinimumSize(new java.awt.Dimension(50, 50));
-        Image_1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                Image_1MouseDragged(evt);
-            }
-        });
-        Image_1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Image_1MouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                Image_1MousePressed(evt);
-            }
-        });
-        Image_1.setBounds(10, 90, 40, 50);
-        drop_zone_panel.add(Image_1);
-        Image_1.setBounds(1000, 580, 140, 110);
-
         Label_Drop_Image.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         Label_Drop_Image.setForeground(new java.awt.Color(0, 0, 0));
         Label_Drop_Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -167,9 +158,26 @@ public class TestLayout extends javax.swing.JFrame {
         drop_zone_panel.add(Label_Drop_Image);
         Label_Drop_Image.setBounds(360, 400, 460, 60);
 
+        IMG_OPTIONS.setBackground(new java.awt.Color(27, 38, 44));
         IMG_OPTIONS.setMaximumSize(new java.awt.Dimension(120, 140));
 
-        jLabel1.setText("Resize");
+        RESIZE_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        RESIZE_LABEL.setText("Resize");
+        RESIZE_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RESIZE_LABELMouseClicked(evt);
+            }
+        });
+
+        Change_Color_Label.setForeground(new java.awt.Color(187, 225, 250));
+        Change_Color_Label.setText("Change Color");
+        Change_Color_Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Change_Color_LabelMouseClicked(evt);
+            }
+        });
+
+        Jlabel_OPTIONS_ID.setText("jlabelID");
 
         javax.swing.GroupLayout IMG_OPTIONSLayout = new javax.swing.GroupLayout(IMG_OPTIONS);
         IMG_OPTIONS.setLayout(IMG_OPTIONSLayout);
@@ -177,19 +185,26 @@ public class TestLayout extends javax.swing.JFrame {
             IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IMG_OPTIONSLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Change_Color_Label, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(RESIZE_LABEL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jlabel_OPTIONS_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         IMG_OPTIONSLayout.setVerticalGroup(
             IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IMG_OPTIONSLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addComponent(RESIZE_LABEL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Change_Color_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(Jlabel_OPTIONS_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         drop_zone_panel.add(IMG_OPTIONS);
-        IMG_OPTIONS.setBounds(960, 20, 120, 140);
+        IMG_OPTIONS.setBounds(860, 230, 120, 140);
         IMG_OPTIONS.setVisible(false);
 
         checkCustomPath.setText("Convert");
@@ -199,69 +214,207 @@ public class TestLayout extends javax.swing.JFrame {
             }
         });
         drop_zone_panel.add(checkCustomPath);
-        checkCustomPath.setBounds(0, 10, 74, 32);
+        checkCustomPath.setBounds(0, 0, 160, 32);
+
+        SETWIDTH_HEIGHT_DIALOG.setBackground(new java.awt.Color(27, 38, 44));
+        SETWIDTH_HEIGHT_DIALOG.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.white, null, null));
+
+        jLabel2.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel2.setText("Set Width :");
+
+        jPanel1.setBackground(new java.awt.Color(15, 76, 117));
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel3.setText("Width and Height Setting");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel3)
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+
+        SET_WIDTH_INPUT.setBackground(new java.awt.Color(27, 38, 44));
+        SET_WIDTH_INPUT.setForeground(new java.awt.Color(187, 225, 250));
+        SET_WIDTH_INPUT.setText("0");
+
+        jLabel4.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel4.setText("Set Height :");
+
+        SET_HEIGHT_INPUT.setBackground(new java.awt.Color(27, 38, 44));
+        SET_HEIGHT_INPUT.setForeground(new java.awt.Color(187, 225, 250));
+        SET_HEIGHT_INPUT.setText("0");
+
+        RESIZE_ID.setText("ID");
+
+        SAVE_W_H_LABEL.setBackground(new java.awt.Color(27, 38, 44));
+        SAVE_W_H_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        SAVE_W_H_LABEL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SAVE_W_H_LABEL.setText("Save");
+        SAVE_W_H_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SAVE_W_H_LABELMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SETWIDTH_HEIGHT_DIALOGLayout = new javax.swing.GroupLayout(SETWIDTH_HEIGHT_DIALOG);
+        SETWIDTH_HEIGHT_DIALOG.setLayout(SETWIDTH_HEIGHT_DIALOGLayout);
+        SETWIDTH_HEIGHT_DIALOGLayout.setHorizontalGroup(
+            SETWIDTH_HEIGHT_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(RESIZE_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
+            .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createSequentialGroup()
+                .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(SET_HEIGHT_INPUT, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(SET_WIDTH_INPUT)))
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(SAVE_W_H_LABEL, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        SETWIDTH_HEIGHT_DIALOGLayout.setVerticalGroup(
+            SETWIDTH_HEIGHT_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(RESIZE_ID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SET_WIDTH_INPUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SETWIDTH_HEIGHT_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SET_HEIGHT_INPUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SAVE_W_H_LABEL))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        drop_zone_panel.add(SETWIDTH_HEIGHT_DIALOG);
+        SETWIDTH_HEIGHT_DIALOG.setBounds(860, 390, 240, 160);
 
         getContentPane().add(drop_zone_panel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void customInit() {
+        SETWIDTH_HEIGHT_DIALOG.setVisible(false);
+    }
+
     private void drop_zone_panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMousePressed
         System.out.println("Jpanel: MOUSE PRESS");
-        xMouseInDeskTopBackground = evt.getX();
-        yMouseInDeskTopBackground = evt.getY();
+//        xMouseInDeskTopBackground = evt.getX();
+//        yMouseInDeskTopBackground = evt.getY();
     }//GEN-LAST:event_drop_zone_panelMousePressed
 
     private void drop_zone_panelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMouseClicked
         // TODO add your handling code here:
-        IMG_OPTIONS.setVisible(false);
-        for (int i = 0; i < sum_pictures; i++) {
-            Border empty = BorderFactory.createEmptyBorder();
-            jlabels[i].setBorder(empty);
-        }
+        hideImageOptions();
+
     }//GEN-LAST:event_drop_zone_panelMouseClicked
 
     private void drop_zone_panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMouseDragged
-        int x = evt.getXOnScreen();
-        int y = evt.getYOnScreen();
-        x2 = x;
-        y2 = y;
-        this.setLocation(x - xMouseInDeskTopBackground, y - yMouseInDeskTopBackground);
+//        int x = evt.getXOnScreen();
+//        int y = evt.getYOnScreen();
+//        x2 = x;
+//        y2 = y;
+//        this.setLocation(x - xMouseInDeskTopBackground, y - yMouseInDeskTopBackground);
     }//GEN-LAST:event_drop_zone_panelMouseDragged
 
     private void checkCustomPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCustomPathActionPerformed
         String namaID = "TEST";
         String namaProject = "ICONBOX";
         String fileName = "SampleIcon";
-        ExportIniFiles exp = new ExportIniFiles(fileName, namaID, namaProject);
+        Export_Script exp = new Export_Script(fileName, namaID, namaProject);
         exp.CreateDirectory();
         exp.PutFileINIinPROJECT();
         //        exp.ExportA();
         exp.PutFileImageinRes(sum_pictures, List_jlabels_stat);
     }//GEN-LAST:event_checkCustomPathActionPerformed
 
-    private void Image_1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MousePressed
-        //        Image_label.setVisible(true);
-        xImage_POS = evt.getX();
-        yImage_POS = evt.getY();
-    }//GEN-LAST:event_Image_1MousePressed
+    private void Change_Color_LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_LabelMouseClicked
+        hideImageOptions();
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
+        jlabels[jlabel_id].getIcon();
+        String fileName = "TempImage" + jlabel_id;
+        Options_Script ops = new Options_Script();
+        try {
 
-    private void Image_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MouseClicked
-        //       Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
-        //        Image_label.setBorder(grayBorder);
-        //        Image_label.setVisible(true);
-        System.out.println("Clicked");
-    }//GEN-LAST:event_Image_1MouseClicked
+            BufferedImage img_input = null;
+            BufferedImage img = null;
+            img_input = ImageIO.read(new File(path_local + fileName + ".png"));
+            img = ops.colorImage(img_input, 255, 0, 0);
+            int Scale = 0;
+            int Pref_Size = 200;
+            if (img.getWidth() > img.getHeight()) {
+                Scale = img.getWidth() / Pref_Size;
+            } else {
+                Scale = img.getHeight() / Pref_Size;
+            }
+            int img_maxwidth = img.getWidth() / Scale;
+            int img_maxheight = img.getHeight() / Scale;
+            Image dimg = img.getScaledInstance(img_maxwidth, img_maxheight, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(dimg);
+            jlabels[jlabel_id].setIcon(icon);
+            drop_zone_panel.validate();
+            drop_zone_panel.repaint();
+//        CreateLabelWithImage(fileName, jlabel_id);
+        } catch (Exception e) {
+            System.out.println("ERR: " + e);
+        }
 
-    private void Image_1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Image_1MouseDragged
+    }//GEN-LAST:event_Change_Color_LabelMouseClicked
+
+    private void RESIZE_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RESIZE_LABELMouseClicked
+        IMG_OPTIONS.setVisible(false);
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-//        Image_1.setLocation((int) ((x - x2 - (Image_1.getWidth() / 2)) - (xMouse2 - xMouseInDeskTopBackground)), (int) ((y - y2 - (Image_1.getHeight() / 2)) - (yMouse2 - yMouseInDeskTopBackground)));
-//        System.out.println("DRAGImage: " + x + " y: " + y);
-//        System.out.println("DRAGx2: " + xMouse2 + " y: " + yMouse2);
-//        System.out.println("DRAGDeskTopBG: " + xMouseInDeskTopBackground + " y: " + yMouseInDeskTopBackground);
-        //        Image_label.setVisible(true);
-    }//GEN-LAST:event_Image_1MouseDragged
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
+        SETWIDTH_HEIGHT_DIALOG.setVisible(true);
+        SETWIDTH_HEIGHT_DIALOG.setLocation(x, y);
+        SET_WIDTH_INPUT.setText("" + jlabels[jlabel_id].getWidth());
+        SET_HEIGHT_INPUT.setText("" + jlabels[jlabel_id].getHeight());
+        RESIZE_ID.setText(""+jlabel_id);
+    }//GEN-LAST:event_RESIZE_LABELMouseClicked
+
+    private void SAVE_W_H_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SAVE_W_H_LABELMouseClicked
+        SETWIDTH_HEIGHT_DIALOG.setVisible(false);
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
+        int newWidth = Integer.parseInt(SET_WIDTH_INPUT.getText());
+        int newHeight = Integer.parseInt(SET_HEIGHT_INPUT.getText());
+        int X =jlabels[jlabel_id].getX();
+        int Y =jlabels[jlabel_id].getY();
+        Options_Script opt = new Options_Script();
+        String fileName = "TempImage" + jlabel_id;
+        jlabels[jlabel_id].setBounds(X,Y,newWidth, newHeight);
+        jlabels[jlabel_id].setIcon(opt.Update_Label_PROPS(fileName, newWidth, newHeight));
+        System.out.println("LISTW1:"+List_jlabels_stat.get(jlabel_id));
+        SetXYWH(X, Y, newWidth, newHeight, jlabel_id);
+        System.out.println("LISTW2:"+List_jlabels_stat.get(jlabel_id));
+        drop_zone_panel.validate();
+        drop_zone_panel.repaint();
+    }//GEN-LAST:event_SAVE_W_H_LABELMouseClicked
 
     /**
      * @param args the command line arguments
@@ -288,7 +441,7 @@ public class TestLayout extends javax.swing.JFrame {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
-                new TestLayout().setVisible(true);
+                new Main_Frame().setVisible(true);
             }
         });
     }
@@ -299,6 +452,15 @@ public class TestLayout extends javax.swing.JFrame {
             if (e.getSource() == jlabels[i]) {
                 System.out.println("Label" + i + "was clicked");
             }
+        }
+    }
+
+    private void hideImageOptions() {
+        IMG_OPTIONS.setVisible(false);
+        SETWIDTH_HEIGHT_DIALOG.setVisible(false);
+        for (int i = 0; i < sum_pictures; i++) {
+            Border empty = BorderFactory.createEmptyBorder();
+            jlabels[i].setBorder(empty);
         }
     }
 
@@ -324,6 +486,7 @@ public class TestLayout extends javax.swing.JFrame {
     public void CreateLabelWithImage(String fileName, int id) {
         try {
             System.out.println("IM CALLED?");
+            Options_Script ops = new Options_Script();
             BufferedImage img = null;
             img = ImageIO.read(new File(path_local + fileName + ".png"));
             int Scale = 0;
@@ -341,14 +504,7 @@ public class TestLayout extends javax.swing.JFrame {
             jlabels[id].setIcon(icon);
             jlabels[id].setBounds(1, 1 + (sum_pictures * 20), img_maxwidth, img_maxheight);
             this.AddXYWH(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
-//            jlabels_coordinat[id] = jlabels[id].getX() + "," + jlabels[id].getY();
             jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
-            jlabels[id].addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    onMouseClicked(e);
-                }
-            });
             jlabels[id].addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
@@ -361,7 +517,7 @@ public class TestLayout extends javax.swing.JFrame {
 //                    System.out.println("XIMAGE:" + jlabels[id].getX());
 //                    System.out.println("x: " + x + " ,x2: " + x2 + " ,xmouse: " + xMouse2 + " ,xmouseDesktop: " + xMouseInDeskTopBackground + " ,Jlabels: " + jlabels[id].getWidth());
 //                    jlabels_coordinat[id] = jlabels[id].getX() + "," + jlabels[id].getY();
-                    SetXYWH(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
+                    SetXYWH(jlabels[id].getX(), jlabels[id].getY(), jlabels[id].getWidth(), jlabels[id].getHeight(), id);
                     jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
 //                    jlabels[id].setLocation(x-jlabels[id].getWidth() -xMouse2 ,y-jlabels[id].getHeight() -yMouse2);
 //                    jlabels[id].setLocation((int) (x - x2 - xMouse2 + xMouseInDeskTopBackground - (jlabels[id].getWidth())), (int) ((y - y2 - (jlabels[id].getHeight())) - (yMouse2 + yMouseInDeskTopBackground)));
@@ -378,11 +534,11 @@ public class TestLayout extends javax.swing.JFrame {
                     Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
                     jlabels[id].setBorder(grayBorder);
                     if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
-                        int x = e.getX();
-                        int y = e.getY();
+                        int x = e.getXOnScreen();
+                        int y = e.getYOnScreen();
                         IMG_OPTIONS.setLocation(x, y);
                         IMG_OPTIONS.setVisible(true);
-
+                        Jlabel_OPTIONS_ID.setText("" + id);
                         //System.out.println("Right Worked");
                     }
                 }
@@ -684,12 +840,22 @@ public class TestLayout extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Change_Color_Label;
     private javax.swing.JPanel IMG_OPTIONS;
-    private javax.swing.JLabel Image_1;
+    private javax.swing.JLabel Jlabel_OPTIONS_ID;
     private javax.swing.JLabel Label_Drop_Image;
+    private javax.swing.JLabel RESIZE_ID;
+    private javax.swing.JLabel RESIZE_LABEL;
+    private javax.swing.JLabel SAVE_W_H_LABEL;
+    private javax.swing.JPanel SETWIDTH_HEIGHT_DIALOG;
+    private javax.swing.JTextField SET_HEIGHT_INPUT;
+    private javax.swing.JTextField SET_WIDTH_INPUT;
     private javax.swing.JToggleButton checkCustomPath;
     private javax.swing.JPanel drop_zone_panel;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

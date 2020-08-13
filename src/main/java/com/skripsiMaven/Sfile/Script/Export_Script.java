@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.skripsiMaven.Sfile;
+package com.skripsiMaven.Sfile.Script;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -24,7 +24,7 @@ import org.ini4j.Wini;
  *
  * @author alexa
  */
-public class ExportIniFiles {
+public class Export_Script {
 
     private String folder_address;
     private String file_name;
@@ -32,7 +32,7 @@ public class ExportIniFiles {
     private String namaID;
     private String namaFolder;
 
-    public ExportIniFiles(String file_name, String namaID, String namaFolder) {
+    public Export_Script(String file_name, String namaID, String namaFolder) {
         this.file_name = file_name;
         this.namaID = namaID;
         this.namaFolder = namaFolder;
@@ -77,6 +77,7 @@ public class ExportIniFiles {
             iniFile.createNewFile();
             Wini ini = new Wini(iniFile);
             // Image File
+            System.out.println("PRINT WH: " + label_stat.get("W") + " H: " + label_stat.get("H"));
             ini.put("ICON" + iconName, "Meter", "Image");
             ini.put("ICON" + iconName, "ImageName", "#@#Images/" + iconName + ".png");
             ini.put("ICON" + iconName, "W", label_stat.get("W") + "*(#scale#)");
@@ -118,12 +119,32 @@ public class ExportIniFiles {
             System.err.println(e.getMessage());
         }
     }
+    private int min_x_coord = 0;
+    private int min_y_coord = 0;
+
+    public void CheckingCoordinat(List<Map<String, Integer>> List_label_stat, int sum_pictures) {
+        for (int i = 0; i < sum_pictures; i++) {
+            Map<String, Integer> label_stat = List_label_stat.get(i);
+            int X_COOR = label_stat.get("X");
+            int Y_COOR = label_stat.get("Y");
+            if (i == 0) {
+                min_x_coord = X_COOR;
+                min_y_coord = Y_COOR;
+            } else {
+                if (X_COOR < min_x_coord) {
+                    min_x_coord = X_COOR;
+                    min_y_coord = Y_COOR;
+                }
+            }
+        }
+    }
 
     public void PutFileImageinRes(int sum_pictures, List<Map<String, Integer>> List_label_stat) {
+        CheckingCoordinat(List_label_stat, sum_pictures);
         String path_local = "src/images/";
         String file_address = "src/file/" + this.namaID + "/@Resources/Images/";
-        int Basex = 0;
-        int Basey = 0;
+        int Basex = min_x_coord;
+        int Basey = min_y_coord;
         try {
             for (int i = 0; i < sum_pictures; i++) {
 //                String[] coordinat = icon_coordinat[i].split(",");;
@@ -138,12 +159,7 @@ public class ExportIniFiles {
                 while ((cursor = in.read()) != -1) {
                     out.write(cursor);
                 }
-                if (i == 0) {
-                    Basex = label_stat.get("X");
-                    Basey = label_stat.get("Y");
-//                    Basex = Integer.parseInt(coordinat[0]);
-//                    Basey = Integer.parseInt(coordinat[1]);
-                    System.out.println("Base x: " + Basex);
+                if ((min_x_coord == label_stat.get("X")) && (min_y_coord == label_stat.get("Y"))) {
                     PutManyIcons(file_Name_dest, 0, 0, label_stat);
                 } else {
                     int Xcoor = label_stat.get("X") - Basex;

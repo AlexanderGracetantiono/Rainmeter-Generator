@@ -105,7 +105,6 @@ public class Main_Frame extends javax.swing.JFrame {
         RESIZE_LABEL = new javax.swing.JLabel();
         Change_Color_Label = new javax.swing.JLabel();
         Jlabel_OPTIONS_ID = new javax.swing.JLabel();
-        checkCustomPath = new javax.swing.JToggleButton();
         SETWIDTH_HEIGHT_DIALOG = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -115,6 +114,9 @@ public class Main_Frame extends javax.swing.JFrame {
         SET_HEIGHT_INPUT = new javax.swing.JTextField();
         RESIZE_ID = new javax.swing.JLabel();
         SAVE_W_H_LABEL = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        EXIT_APP = new javax.swing.JLabel();
+        checkCustomPath = new javax.swing.JToggleButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -206,15 +208,6 @@ public class Main_Frame extends javax.swing.JFrame {
         drop_zone_panel.add(IMG_OPTIONS);
         IMG_OPTIONS.setBounds(860, 230, 120, 140);
         IMG_OPTIONS.setVisible(false);
-
-        checkCustomPath.setText("Convert");
-        checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkCustomPathActionPerformed(evt);
-            }
-        });
-        drop_zone_panel.add(checkCustomPath);
-        checkCustomPath.setBounds(0, 0, 160, 32);
 
         SETWIDTH_HEIGHT_DIALOG.setBackground(new java.awt.Color(27, 38, 44));
         SETWIDTH_HEIGHT_DIALOG.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.white, null, null));
@@ -313,6 +306,49 @@ public class Main_Frame extends javax.swing.JFrame {
         drop_zone_panel.add(SETWIDTH_HEIGHT_DIALOG);
         SETWIDTH_HEIGHT_DIALOG.setBounds(860, 390, 240, 160);
 
+        jPanel2.setPreferredSize(new java.awt.Dimension(1920, 50));
+
+        EXIT_APP.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        EXIT_APP.setForeground(new java.awt.Color(255, 0, 51));
+        EXIT_APP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        EXIT_APP.setText("X");
+        EXIT_APP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EXIT_APPMouseClicked(evt);
+            }
+        });
+
+        checkCustomPath.setText("Convert");
+        checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkCustomPathActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(checkCustomPath, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1004, Short.MAX_VALUE)
+                .addComponent(EXIT_APP)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkCustomPath)
+                    .addComponent(EXIT_APP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8))
+        );
+
+        drop_zone_panel.add(jPanel2);
+        jPanel2.setBounds(0, 0, 1200, 50);
+
         getContentPane().add(drop_zone_panel);
 
         pack();
@@ -395,7 +431,7 @@ public class Main_Frame extends javax.swing.JFrame {
         SETWIDTH_HEIGHT_DIALOG.setLocation(x, y);
         SET_WIDTH_INPUT.setText("" + jlabels[jlabel_id].getWidth());
         SET_HEIGHT_INPUT.setText("" + jlabels[jlabel_id].getHeight());
-        RESIZE_ID.setText(""+jlabel_id);
+        RESIZE_ID.setText("" + jlabel_id);
     }//GEN-LAST:event_RESIZE_LABELMouseClicked
 
     private void SAVE_W_H_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SAVE_W_H_LABELMouseClicked
@@ -403,18 +439,29 @@ public class Main_Frame extends javax.swing.JFrame {
         int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
         int newWidth = Integer.parseInt(SET_WIDTH_INPUT.getText());
         int newHeight = Integer.parseInt(SET_HEIGHT_INPUT.getText());
-        int X =jlabels[jlabel_id].getX();
-        int Y =jlabels[jlabel_id].getY();
+        int X = jlabels[jlabel_id].getX();
+        int Y = jlabels[jlabel_id].getY();
         Options_Script opt = new Options_Script();
         String fileName = "TempImage" + jlabel_id;
-        jlabels[jlabel_id].setBounds(X,Y,newWidth, newHeight);
+        jlabels[jlabel_id].setBounds(X, Y, newWidth, newHeight);
         jlabels[jlabel_id].setIcon(opt.Update_Label_PROPS(fileName, newWidth, newHeight));
-        System.out.println("LISTW1:"+List_jlabels_stat.get(jlabel_id));
+        System.out.println("LISTW1:" + List_jlabels_stat.get(jlabel_id));
         SetXYWH(X, Y, newWidth, newHeight, jlabel_id);
-        System.out.println("LISTW2:"+List_jlabels_stat.get(jlabel_id));
+        System.out.println("LISTW2:" + List_jlabels_stat.get(jlabel_id));
         drop_zone_panel.validate();
         drop_zone_panel.repaint();
     }//GEN-LAST:event_SAVE_W_H_LABELMouseClicked
+
+    private void EXIT_APPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EXIT_APPMouseClicked
+        int EXIT_RESPONSE = JOptionPane.showConfirmDialog(jPanel1, "Are you sure want to exit app ? ", "Yes, Confirm", JOptionPane.YES_NO_OPTION);
+        if (EXIT_RESPONSE == JOptionPane.YES_OPTION) {
+            dispose();
+            Launcher launcher = new Launcher();
+            launcher.setVisible(true);
+            launcher.setUndecorated(true);
+            launcher.setLocationRelativeTo(null);
+        }
+    }//GEN-LAST:event_EXIT_APPMouseClicked
 
     /**
      * @param args the command line arguments
@@ -841,6 +888,7 @@ public class Main_Frame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Change_Color_Label;
+    private javax.swing.JLabel EXIT_APP;
     private javax.swing.JPanel IMG_OPTIONS;
     private javax.swing.JLabel Jlabel_OPTIONS_ID;
     private javax.swing.JLabel Label_Drop_Image;
@@ -857,5 +905,6 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

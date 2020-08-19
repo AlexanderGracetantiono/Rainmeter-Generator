@@ -31,12 +31,14 @@ public class Export_Script {
     private String local_res_path;
     private String namaID;
     private String namaFolder;
+    private String dir_Path;
 
-    public Export_Script(String file_name, String namaID, String namaFolder) {
+    public Export_Script(String file_name, String namaID, String namaFolder,File dirPath) {
         this.file_name = file_name;
         this.namaID = namaID;
         this.namaFolder = namaFolder;
-        this.folder_address = "src/file/" + namaID + "/" + namaFolder;
+        this.dir_Path = dirPath.getPath()+"/";
+        this.folder_address = this.dir_Path + namaID + "/" + namaFolder;
     }
 
     public static void ExportA(String namaID, String namaFolder, String fileName) {
@@ -56,9 +58,9 @@ public class Export_Script {
 
     public void CreateDirectory() {
         try {
-
-            Path path1 = Paths.get("src/file/" + this.namaID + "/@Resources/Images");
-            Path path2 = Paths.get("src/file/" + this.namaID + "/" + this.namaFolder);
+//            String file_address = "C:/file/" + this.namaID + "/@Resources/Images/";
+            Path path1 = Paths.get(this.dir_Path + this.namaID + "/@Resources/Images");
+            Path path2 = Paths.get(this.dir_Path + this.namaID + "/" + this.namaFolder);
             Files.createDirectories(path1);
             Files.createDirectories(path2);
             System.out.println("Directory is created!");
@@ -71,8 +73,9 @@ public class Export_Script {
     }
 
     public void PutManyIcons(String iconName, int Xcoordinate, int Ycoordinate, Map<String, Integer> label_stat) {
-        String file_address = "src/file/" + this.namaID + "/" + this.namaFolder;
-        File iniFile = new File(file_address + "/" + this.file_name + ".ini");
+        String file_address = this.dir_Path + this.namaID + "/" + this.namaFolder;
+//          String file_address = "C:\\file\\" + this.namaID + "\\@Resources\\Images\\";
+        File iniFile = new File(file_address + "\\" + this.file_name + ".ini");
         try {
             iniFile.createNewFile();
             Wini ini = new Wini(iniFile);
@@ -92,7 +95,7 @@ public class Export_Script {
     }
 
     public void PutFileINIinPROJECT() {
-        String file_address = "src/file/" + this.namaID + "/" + this.namaFolder;
+        String file_address = this.dir_Path + this.namaID + "/" + this.namaFolder;
         File iniFile = new File(file_address + "/" + this.file_name + ".ini");
         try {
             iniFile.createNewFile();
@@ -139,32 +142,38 @@ public class Export_Script {
         }
     }
 
-    public void PutFileImageinRes(int sum_pictures, List<Map<String, Integer>> List_label_stat) {
+    public void PutFileImageinRes(int sum_pictures, List<Map<String, Integer>> List_label_stat, List<Map<String, File>> List_image) {
         CheckingCoordinat(List_label_stat, sum_pictures);
         String path_local = "src/images/";
-        String file_address = "src/file/" + this.namaID + "/@Resources/Images/";
+        String file_address = this.dir_Path + this.namaID + "/@Resources/Images/";
         int Basex = min_x_coord;
         int Basey = min_y_coord;
         try {
             for (int i = 0; i < sum_pictures; i++) {
 //                String[] coordinat = icon_coordinat[i].split(",");;
                 Map<String, Integer> label_stat = List_label_stat.get(i);
+                Map<String, File> label_image = List_image.get(i);
+                File f = label_image.get("filePath");
                 FileOutputStream out = null;
                 FileInputStream in = null;
                 int cursor;
-                String file_Name = "TempImage" + i;
                 String file_Name_dest = "Icon" + i;
-                in = new FileInputStream(new File(path_local + file_Name + ".png"));
+                in = new FileInputStream(label_image.get("filePath"));
+                System.out.println("ERR1");
                 out = new FileOutputStream(file_address + file_Name_dest + ".png");
+                System.out.println("ERR2");
                 while ((cursor = in.read()) != -1) {
                     out.write(cursor);
                 }
                 if ((min_x_coord == label_stat.get("X")) && (min_y_coord == label_stat.get("Y"))) {
+//                    System.out.println(f.getName());
                     PutManyIcons(file_Name_dest, 0, 0, label_stat);
+                    System.out.println("ERR3");
                 } else {
                     int Xcoor = label_stat.get("X") - Basex;
                     int Ycoor = label_stat.get("Y") - Basey;
                     PutManyIcons(file_Name_dest, Xcoor, Ycoor, label_stat);
+                    System.out.println("ERR3");
 
                 }
             }

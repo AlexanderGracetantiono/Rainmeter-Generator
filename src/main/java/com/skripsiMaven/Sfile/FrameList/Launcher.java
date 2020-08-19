@@ -248,7 +248,7 @@ public class Launcher extends javax.swing.JFrame {
         dispose();
         Main_Frame screenHome = new Main_Frame();
         screenHome.setVisible(true);
-        screenHome.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        screenHome.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        screenHome.setUndecorated(true);
 
     }//GEN-LAST:event_jLabel5MouseClicked

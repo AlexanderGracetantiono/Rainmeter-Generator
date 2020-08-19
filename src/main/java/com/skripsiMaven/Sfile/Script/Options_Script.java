@@ -34,11 +34,13 @@ public class Options_Script {
 
     public ImageIcon Update_Label_PROPS(String fileName, int W, int H) {
         BufferedImage img = null;
+        System.out.println("PATH IMAGE: "+fileName);
         try {
-            img = ImageIO.read(new File(path_local + fileName + ".png"));
+            img = ImageIO.read(new File( fileName));
         } catch (Exception e) {
         }
-        Image dimg = img.getScaledInstance(W, H, Image.SCALE_SMOOTH);
+//        Image dimg = img.getScaledInstance(W, H, Image.);
+        Image dimg = img.getScaledInstance(W, H, Image.SCALE_DEFAULT);
         ImageIcon icon = new ImageIcon(dimg);
         return icon;
     }

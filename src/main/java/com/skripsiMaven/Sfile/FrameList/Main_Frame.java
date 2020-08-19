@@ -44,6 +44,7 @@ import java.util.TooManyListenersException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -67,6 +68,8 @@ public class Main_Frame extends javax.swing.JFrame {
 
     int xImage_POS;
     int yImage_POS;
+    JFileChooser chooser;
+    String choosertitle;
 
     double Coor_ScaleX = 1.55;
     double Coor_ScaleY = 3.65;
@@ -75,6 +78,7 @@ public class Main_Frame extends javax.swing.JFrame {
     String[] jlabels_coordinat = new String[10];
 
     List<Map<String, Integer>> List_jlabels_stat = new ArrayList<Map<String, Integer>>();
+    List<Map<String, File>> List_jlabels_stat_base = new ArrayList<Map<String, File>>();
 //    String[] jlabels_stat = new String[10];
     JOptionPane alertBox = new JOptionPane();
 
@@ -117,6 +121,8 @@ public class Main_Frame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         EXIT_APP = new javax.swing.JLabel();
         checkCustomPath = new javax.swing.JToggleButton();
+        Choose_File_Panel = new javax.swing.JPanel();
+        jFileChooser1 = new javax.swing.JFileChooser();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -318,7 +324,7 @@ public class Main_Frame extends javax.swing.JFrame {
             }
         });
 
-        checkCustomPath.setText("Convert");
+        checkCustomPath.setText("Save File");
         checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkCustomPathActionPerformed(evt);
@@ -349,6 +355,29 @@ public class Main_Frame extends javax.swing.JFrame {
         drop_zone_panel.add(jPanel2);
         jPanel2.setBounds(0, 0, 1200, 50);
 
+        jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser1.setAcceptAllFileFilterUsed(false);
+
+        javax.swing.GroupLayout Choose_File_PanelLayout = new javax.swing.GroupLayout(Choose_File_Panel);
+        Choose_File_Panel.setLayout(Choose_File_PanelLayout);
+        Choose_File_PanelLayout.setHorizontalGroup(
+            Choose_File_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Choose_File_PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        Choose_File_PanelLayout.setVerticalGroup(
+            Choose_File_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Choose_File_PanelLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        drop_zone_panel.add(Choose_File_Panel);
+        Choose_File_Panel.setBounds(150, 90, 700, 510);
+
         getContentPane().add(drop_zone_panel);
 
         pack();
@@ -356,6 +385,7 @@ public class Main_Frame extends javax.swing.JFrame {
 
     public void customInit() {
         SETWIDTH_HEIGHT_DIALOG.setVisible(false);
+        Choose_File_Panel.setVisible(false);
     }
 
     private void drop_zone_panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMousePressed
@@ -379,14 +409,33 @@ public class Main_Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_drop_zone_panelMouseDragged
 
     private void checkCustomPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCustomPathActionPerformed
-        String namaID = "TEST";
-        String namaProject = "ICONBOX";
-        String fileName = "SampleIcon";
-        Export_Script exp = new Export_Script(fileName, namaID, namaProject);
-        exp.CreateDirectory();
-        exp.PutFileINIinPROJECT();
-        //        exp.ExportA();
-        exp.PutFileImageinRes(sum_pictures, List_jlabels_stat);
+//        Choose_File_Panel.setVisible(true);
+
+//        chooser = new JFileChooser();
+//        chooser.setCurrentDirectory(new java.io.File("."));
+//        chooser.setDialogTitle(choosertitle);
+//        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+//        chooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (jFileChooser1.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            System.out.println("getCurrentDirectory(): "
+                    + jFileChooser1.getCurrentDirectory());
+            System.out.println("getSelectedFile() : "
+                    + jFileChooser1.getSelectedFile());
+            String namaID = "TEST";
+            String namaProject = "ICONBOX";
+            String fileName = "SampleIcon";
+            Export_Script exp = new Export_Script(fileName, namaID, namaProject, jFileChooser1.getSelectedFile());
+            exp.CreateDirectory();
+            exp.PutFileINIinPROJECT();
+            exp.PutFileImageinRes(sum_pictures, List_jlabels_stat, List_jlabels_stat_base);
+        } else {
+            System.out.println("No Selection ");
+        }
+
     }//GEN-LAST:event_checkCustomPathActionPerformed
 
     private void Change_Color_LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_LabelMouseClicked
@@ -432,6 +481,7 @@ public class Main_Frame extends javax.swing.JFrame {
         SET_WIDTH_INPUT.setText("" + jlabels[jlabel_id].getWidth());
         SET_HEIGHT_INPUT.setText("" + jlabels[jlabel_id].getHeight());
         RESIZE_ID.setText("" + jlabel_id);
+        
     }//GEN-LAST:event_RESIZE_LABELMouseClicked
 
     private void SAVE_W_H_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SAVE_W_H_LABELMouseClicked
@@ -442,9 +492,13 @@ public class Main_Frame extends javax.swing.JFrame {
         int X = jlabels[jlabel_id].getX();
         int Y = jlabels[jlabel_id].getY();
         Options_Script opt = new Options_Script();
-        String fileName = "TempImage" + jlabel_id;
+        Map<String, File> jlabel_file_img = List_jlabels_stat_base.get(jlabel_id);
+
+        String fileName = jlabel_file_img.get("filePath").getPath();
+
         jlabels[jlabel_id].setBounds(X, Y, newWidth, newHeight);
         jlabels[jlabel_id].setIcon(opt.Update_Label_PROPS(fileName, newWidth, newHeight));
+
         System.out.println("LISTW1:" + List_jlabels_stat.get(jlabel_id));
         SetXYWH(X, Y, newWidth, newHeight, jlabel_id);
         System.out.println("LISTW2:" + List_jlabels_stat.get(jlabel_id));
@@ -530,12 +584,19 @@ public class Main_Frame extends javax.swing.JFrame {
         List_jlabels_stat.set(id, jlabels_stat);
     }
 
-    public void CreateLabelWithImage(String fileName, int id) {
+    public void Set_jlabel_Basic(File filePath, int id) {
+        Map<String, File> jlabels_stat = new HashMap<>();
+        jlabels_stat.put("filePath", filePath);
+        List_jlabels_stat_base.add(id, jlabels_stat);
+    }
+
+    public void CreateLabelWithImage(int id) {
         try {
             System.out.println("IM CALLED?");
-            Options_Script ops = new Options_Script();
+//            Options_Script ops = new Options_Script();
             BufferedImage img = null;
-            img = ImageIO.read(new File(path_local + fileName + ".png"));
+            Map<String, File> jlabel_file_img = List_jlabels_stat_base.get(id);
+            img = ImageIO.read(jlabel_file_img.get("filePath"));
             int Scale = 0;
             int Pref_Size = 200;
             if (img.getWidth() > img.getHeight()) {
@@ -557,17 +618,9 @@ public class Main_Frame extends javax.swing.JFrame {
                 public void mouseDragged(MouseEvent e) {
                     int x = e.getXOnScreen();
                     int y = e.getYOnScreen();
-//                    jlabels[id].setLocation(x-xMouse2,y-yMouse2);
-//                    jlabels[id].setLocation((int) ((x - x2 - (jlabels[id].getWidth() / 2))), (int) ((y - y2 - (jlabels[id].getHeight() / 2))));
-//                    System.out.println("X: " + (int) (x - (jlabels[id].getWidth())));
-//                    System.out.println("Y: " + (int) (y - y2 - yMouse2 + yMouseInDeskTopBackground - (jlabels[id].getHeight() / 2)));
-//                    System.out.println("XIMAGE:" + jlabels[id].getX());
-//                    System.out.println("x: " + x + " ,x2: " + x2 + " ,xmouse: " + xMouse2 + " ,xmouseDesktop: " + xMouseInDeskTopBackground + " ,Jlabels: " + jlabels[id].getWidth());
-//                    jlabels_coordinat[id] = jlabels[id].getX() + "," + jlabels[id].getY();
                     SetXYWH(jlabels[id].getX(), jlabels[id].getY(), jlabels[id].getWidth(), jlabels[id].getHeight(), id);
+
                     jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
-//                    jlabels[id].setLocation(x-jlabels[id].getWidth() -xMouse2 ,y-jlabels[id].getHeight() -yMouse2);
-//                    jlabels[id].setLocation((int) (x - x2 - xMouse2 + xMouseInDeskTopBackground - (jlabels[id].getWidth())), (int) ((y - y2 - (jlabels[id].getHeight())) - (yMouse2 + yMouseInDeskTopBackground)));
                 }
 
                 @Override
@@ -705,35 +758,39 @@ public class Main_Frame extends javax.swing.JFrame {
                             System.out.println("files.size(): " + files.size());
                             if (sum_pictures == 0) {
                                 for (int i = 0; i < files.size(); i++) {
-                                    FileOutputStream out = null;
-                                    FileInputStream in = null;
-                                    int cursor;
-                                    String fileName = "TempImage" + i;
-                                    System.out.println("GAMBAR: " + files.get(i));
-                                    in = new FileInputStream((File) files.get(i));
-                                    out = new FileOutputStream(path_local + fileName + ".png");
-                                    System.out.println("GAMBAR NEXT: " + fileName);
-                                    while ((cursor = in.read()) != -1) {
-                                        out.write(cursor);
-                                    }
-                                    CreateLabelWithImage(fileName, i);
+//                                    FileOutputStream out = null;
+//                                    FileInputStream in = null;
+//                                    int cursor;
+//                                    String fileName = "TempImage" + i;
+//                                    System.out.println("GAMBAR: " + files.get(i));
+//                                    in = new FileInputStream((File) files.get(i));
+//                                    out = new FileOutputStream(path_local + fileName + ".png");
+//                                    String a = String.
+//                                    System.out.println("PATH FILES: " + files.get(i));
+                                    Set_jlabel_Basic((File) files.get(i), i);
+//                                    System.out.println("GAMBAR NEXT: " + fileName);
+//                                    while ((cursor = in.read()) != -1) {
+//                                        out.write(cursor);
+//                                    }
+                                    CreateLabelWithImage(i);
                                 }
                                 sum_pictures = files.size();
                             } else {
                                 for (int i = sum_pictures; i < (sum_pictures + files.size()); i++) {
-                                    System.out.println("nilai I: " + i);
-                                    FileOutputStream out = null;
-                                    FileInputStream in = null;
-                                    int cursor;
-                                    String fileName = "TempImage" + i;
-                                    System.out.println("GAMBAR: " + files.get(i - sum_pictures));
-                                    in = new FileInputStream((File) files.get(i - sum_pictures));
-                                    out = new FileOutputStream(path_local + fileName + ".png");
-                                    System.out.println("GAMBAR NEXT: " + fileName);
-                                    while ((cursor = in.read()) != -1) {
-                                        out.write(cursor);
-                                    }
-                                    CreateLabelWithImage(fileName, i);
+//                                    System.out.println("nilai I: " + i);
+//                                    FileOutputStream out = null;
+//                                    FileInputStream in = null;
+//                                    int cursor;
+//                                    String fileName = "TempImage" + i;
+//                                    System.out.println("GAMBAR: " + files.get(i - sum_pictures));
+//                                    in = new FileInputStream((File) files.get(i - sum_pictures));
+//                                    out = new FileOutputStream(path_local + fileName + ".png");
+//                                    System.out.println("GAMBAR NEXT: " + fileName);
+                                    Set_jlabel_Basic((File) files.get(i - sum_pictures), i);
+//                                    while ((cursor = in.read()) != -1) {
+//                                        out.write(cursor);
+//                                    }
+                                    CreateLabelWithImage(i);
                                 }
                                 sum_pictures += files.size();
                             }
@@ -809,7 +866,6 @@ public class Main_Frame extends javax.swing.JFrame {
                 if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
                     dtde.acceptDrop(dtde.getDropAction());
                     try {
-
                         List transferData = (List) transferable.getTransferData(DataFlavor.javaFileListFlavor);
 //                        jLabel1.setIcon(new ImageIcon(transferData.get(0)));
                         importFiles(transferData);
@@ -888,6 +944,7 @@ public class Main_Frame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Change_Color_Label;
+    private javax.swing.JPanel Choose_File_Panel;
     private javax.swing.JLabel EXIT_APP;
     private javax.swing.JPanel IMG_OPTIONS;
     private javax.swing.JLabel Jlabel_OPTIONS_ID;
@@ -900,6 +957,7 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JTextField SET_WIDTH_INPUT;
     private javax.swing.JToggleButton checkCustomPath;
     private javax.swing.JPanel drop_zone_panel;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

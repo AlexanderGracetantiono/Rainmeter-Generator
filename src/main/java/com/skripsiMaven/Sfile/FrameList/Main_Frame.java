@@ -9,6 +9,7 @@ import com.skripsiMaven.Sfile.Script.Export_Script;
 import com.skripsiMaven.Sfile.Script.Options_Script;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
@@ -60,7 +61,6 @@ import javax.swing.border.Border;
  */
 public class Main_Frame extends javax.swing.JFrame {
 
-    private int sum_pictures = 0;
     int xMouseInDeskTopBackground;
     int yMouseInDeskTopBackground;
     int x2;
@@ -77,9 +77,15 @@ public class Main_Frame extends javax.swing.JFrame {
     JLabel jlabels[] = new JLabel[10];
     String[] jlabels_coordinat = new String[10];
 
-    List<Map<String, Integer>> List_jlabels_stat = new ArrayList<Map<String, Integer>>();
-    List<Map<String, File>> List_jlabels_stat_base = new ArrayList<Map<String, File>>();
-//    String[] jlabels_stat = new String[10];
+    private int sum_Labels = 0;
+    private int jlabels_SUM_ID = 0;
+    List<Map<String, Integer>> List_jlabels_statField_img = new ArrayList<Map<String, Integer>>();
+    List<Map<String, Object>> List_jlabels_statField_text = new ArrayList<Map<String, Object>>();
+    List<Map<String, File>> List_jlabels_base_img = new ArrayList<Map<String, File>>();
+    List<Map<String, Object>> List_jlabels_base_sample = new ArrayList<Map<String, Object>>();
+    List<Map<String, String>> List_jlabels_base_text = new ArrayList<Map<String, String>>();
+
+    List<Map<String, Integer>> List_labels_type = new ArrayList<Map<String, Integer>>();
     JOptionPane alertBox = new JOptionPane();
 
     /**
@@ -118,11 +124,21 @@ public class Main_Frame extends javax.swing.JFrame {
         SET_HEIGHT_INPUT = new javax.swing.JTextField();
         RESIZE_ID = new javax.swing.JLabel();
         SAVE_W_H_LABEL = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        FILE_LABEL = new javax.swing.JPanel();
         EXIT_APP = new javax.swing.JLabel();
-        checkCustomPath = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
+        INSERT_LABEL = new javax.swing.JLabel();
         Choose_File_Panel = new javax.swing.JPanel();
         jFileChooser1 = new javax.swing.JFileChooser();
+        checkCustomPath = new javax.swing.JToggleButton();
+        FILE_OPTIONS = new javax.swing.JPanel();
+        FILE_SAVE = new javax.swing.JLabel();
+        Change_Color_Label1 = new javax.swing.JLabel();
+        Jlabel_OPTIONS_ID1 = new javax.swing.JLabel();
+        INSERT_OPTIONS = new javax.swing.JPanel();
+        IN_RAM_METER_LABEL = new javax.swing.JLabel();
+        Jlabel_OPTIONS_ID2 = new javax.swing.JLabel();
+        IN_CPU_METER_LABEL = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -171,6 +187,7 @@ public class Main_Frame extends javax.swing.JFrame {
 
         RESIZE_LABEL.setForeground(new java.awt.Color(187, 225, 250));
         RESIZE_LABEL.setText("Resize");
+        RESIZE_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         RESIZE_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RESIZE_LABELMouseClicked(evt);
@@ -262,6 +279,7 @@ public class Main_Frame extends javax.swing.JFrame {
         SAVE_W_H_LABEL.setForeground(new java.awt.Color(187, 225, 250));
         SAVE_W_H_LABEL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         SAVE_W_H_LABEL.setText("Save");
+        SAVE_W_H_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SAVE_W_H_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SAVE_W_H_LABELMouseClicked(evt);
@@ -312,48 +330,68 @@ public class Main_Frame extends javax.swing.JFrame {
         drop_zone_panel.add(SETWIDTH_HEIGHT_DIALOG);
         SETWIDTH_HEIGHT_DIALOG.setBounds(860, 390, 240, 160);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(1920, 50));
+        FILE_LABEL.setBackground(new java.awt.Color(27, 38, 44));
+        FILE_LABEL.setPreferredSize(new java.awt.Dimension(1920, 50));
 
         EXIT_APP.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         EXIT_APP.setForeground(new java.awt.Color(255, 0, 51));
         EXIT_APP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        EXIT_APP.setText("X");
+        EXIT_APP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons8_sign_out_30px.png"))); // NOI18N
         EXIT_APP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EXIT_APPMouseClicked(evt);
             }
         });
 
-        checkCustomPath.setText("Save File");
-        checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkCustomPathActionPerformed(evt);
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel1.setText("File");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        INSERT_LABEL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        INSERT_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        INSERT_LABEL.setText("Insert");
+        INSERT_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        INSERT_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                INSERT_LABELMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout FILE_LABELLayout = new javax.swing.GroupLayout(FILE_LABEL);
+        FILE_LABEL.setLayout(FILE_LABELLayout);
+        FILE_LABELLayout.setHorizontalGroup(
+            FILE_LABELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FILE_LABELLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(checkCustomPath, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1004, Short.MAX_VALUE)
-                .addComponent(EXIT_APP)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(INSERT_LABEL, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 962, Short.MAX_VALUE)
+                .addComponent(EXIT_APP, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(checkCustomPath)
-                    .addComponent(EXIT_APP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        FILE_LABELLayout.setVerticalGroup(
+            FILE_LABELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FILE_LABELLayout.createSequentialGroup()
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addGroup(FILE_LABELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EXIT_APP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(FILE_LABELLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(FILE_LABELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(INSERT_LABEL))))
                 .addGap(8, 8, 8))
         );
 
-        drop_zone_panel.add(jPanel2);
-        jPanel2.setBounds(0, 0, 1200, 50);
+        drop_zone_panel.add(FILE_LABEL);
+        FILE_LABEL.setBounds(0, 0, 1200, 50);
 
         jFileChooser1.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jFileChooser1.setAcceptAllFileFilterUsed(false);
@@ -376,7 +414,120 @@ public class Main_Frame extends javax.swing.JFrame {
         );
 
         drop_zone_panel.add(Choose_File_Panel);
-        Choose_File_Panel.setBounds(150, 90, 700, 510);
+        Choose_File_Panel.setBounds(150, 250, 700, 510);
+
+        checkCustomPath.setText("Save File");
+        checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkCustomPathActionPerformed(evt);
+            }
+        });
+        drop_zone_panel.add(checkCustomPath);
+        checkCustomPath.setBounds(1040, 760, 160, 32);
+
+        FILE_OPTIONS.setBackground(new java.awt.Color(27, 38, 44));
+        FILE_OPTIONS.setMaximumSize(new java.awt.Dimension(120, 140));
+
+        FILE_SAVE.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        FILE_SAVE.setForeground(new java.awt.Color(187, 225, 250));
+        FILE_SAVE.setText("Save Project");
+        FILE_SAVE.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FILE_SAVE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FILE_SAVEMouseClicked(evt);
+            }
+        });
+
+        Change_Color_Label1.setForeground(new java.awt.Color(187, 225, 250));
+        Change_Color_Label1.setText("Choose File");
+        Change_Color_Label1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Change_Color_Label1MouseClicked(evt);
+            }
+        });
+
+        Jlabel_OPTIONS_ID1.setText("jlabelID");
+
+        javax.swing.GroupLayout FILE_OPTIONSLayout = new javax.swing.GroupLayout(FILE_OPTIONS);
+        FILE_OPTIONS.setLayout(FILE_OPTIONSLayout);
+        FILE_OPTIONSLayout.setHorizontalGroup(
+            FILE_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FILE_OPTIONSLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(FILE_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Change_Color_Label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(FILE_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(Jlabel_OPTIONS_ID1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        FILE_OPTIONSLayout.setVerticalGroup(
+            FILE_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FILE_OPTIONSLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(FILE_SAVE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Change_Color_Label1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addComponent(Jlabel_OPTIONS_ID1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        drop_zone_panel.add(FILE_OPTIONS);
+        FILE_OPTIONS.setBounds(0, 50, 110, 250);
+        IMG_OPTIONS.setVisible(false);
+
+        INSERT_OPTIONS.setBackground(new java.awt.Color(27, 38, 44));
+        INSERT_OPTIONS.setMaximumSize(new java.awt.Dimension(120, 140));
+
+        IN_RAM_METER_LABEL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        IN_RAM_METER_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        IN_RAM_METER_LABEL.setText("Insert RAM Meter");
+        IN_RAM_METER_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        IN_RAM_METER_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                IN_RAM_METER_LABELMouseClicked(evt);
+            }
+        });
+
+        Jlabel_OPTIONS_ID2.setText("jlabelID");
+
+        IN_CPU_METER_LABEL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        IN_CPU_METER_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        IN_CPU_METER_LABEL.setText("Insert CPU Meter");
+        IN_CPU_METER_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        IN_CPU_METER_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                IN_CPU_METER_LABELMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout INSERT_OPTIONSLayout = new javax.swing.GroupLayout(INSERT_OPTIONS);
+        INSERT_OPTIONS.setLayout(INSERT_OPTIONSLayout);
+        INSERT_OPTIONSLayout.setHorizontalGroup(
+            INSERT_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(INSERT_OPTIONSLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(INSERT_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(IN_RAM_METER_LABEL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jlabel_OPTIONS_ID2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(IN_CPU_METER_LABEL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        INSERT_OPTIONSLayout.setVerticalGroup(
+            INSERT_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(INSERT_OPTIONSLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(IN_RAM_METER_LABEL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(IN_CPU_METER_LABEL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addComponent(Jlabel_OPTIONS_ID2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        drop_zone_panel.add(INSERT_OPTIONS);
+        INSERT_OPTIONS.setBounds(110, 50, 170, 250);
+        IMG_OPTIONS.setVisible(false);
 
         getContentPane().add(drop_zone_panel);
 
@@ -386,6 +537,8 @@ public class Main_Frame extends javax.swing.JFrame {
     public void customInit() {
         SETWIDTH_HEIGHT_DIALOG.setVisible(false);
         Choose_File_Panel.setVisible(false);
+        INSERT_OPTIONS.setVisible(false);
+        FILE_OPTIONS.setVisible(false);
     }
 
     private void drop_zone_panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMousePressed
@@ -407,19 +560,7 @@ public class Main_Frame extends javax.swing.JFrame {
 //        y2 = y;
 //        this.setLocation(x - xMouseInDeskTopBackground, y - yMouseInDeskTopBackground);
     }//GEN-LAST:event_drop_zone_panelMouseDragged
-
-    private void checkCustomPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCustomPathActionPerformed
-//        Choose_File_Panel.setVisible(true);
-
-//        chooser = new JFileChooser();
-//        chooser.setCurrentDirectory(new java.io.File("."));
-//        chooser.setDialogTitle(choosertitle);
-//        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        //
-        // disable the "All files" option.
-        //
-//        chooser.setAcceptAllFileFilterUsed(false);
-        //    
+    private void SaveProject() {
         if (jFileChooser1.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             System.out.println("getCurrentDirectory(): "
                     + jFileChooser1.getCurrentDirectory());
@@ -431,11 +572,14 @@ public class Main_Frame extends javax.swing.JFrame {
             Export_Script exp = new Export_Script(fileName, namaID, namaProject, jFileChooser1.getSelectedFile());
             exp.CreateDirectory();
             exp.PutFileINIinPROJECT();
-            exp.PutFileImageinRes(sum_pictures, List_jlabels_stat, List_jlabels_stat_base);
+            exp.PutFileImageinRes(sum_Labels, List_jlabels_statField_img, List_jlabels_base_img, List_jlabels_statField_text, List_jlabels_base_text, List_labels_type);
         } else {
             System.out.println("No Selection ");
         }
-
+    }
+    private void checkCustomPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkCustomPathActionPerformed
+        FILE_OPTIONS.setVisible(false);
+        this.SaveProject();
     }//GEN-LAST:event_checkCustomPathActionPerformed
 
     private void Change_Color_LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_LabelMouseClicked
@@ -481,7 +625,7 @@ public class Main_Frame extends javax.swing.JFrame {
         SET_WIDTH_INPUT.setText("" + jlabels[jlabel_id].getWidth());
         SET_HEIGHT_INPUT.setText("" + jlabels[jlabel_id].getHeight());
         RESIZE_ID.setText("" + jlabel_id);
-        
+
     }//GEN-LAST:event_RESIZE_LABELMouseClicked
 
     private void SAVE_W_H_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SAVE_W_H_LABELMouseClicked
@@ -492,16 +636,21 @@ public class Main_Frame extends javax.swing.JFrame {
         int X = jlabels[jlabel_id].getX();
         int Y = jlabels[jlabel_id].getY();
         Options_Script opt = new Options_Script();
-        Map<String, File> jlabel_file_img = List_jlabels_stat_base.get(jlabel_id);
-
-        String fileName = jlabel_file_img.get("filePath").getPath();
+//        Map<String, File> jlabel_file_img = List_jlabels_base_img.get(jlabel_id);
+        Map<String, Object> jlabel_file_img = List_jlabels_base_sample.get(jlabel_id);
+        int TypeData = opt.ConvertObjectToInt(jlabel_file_img.get("typeData"));
+        File fileData = opt.ConvertObjectToFile(jlabel_file_img.get("filePath"));
+        String fileName = null;
+        if (TypeData == 1) {
+            fileName = fileData.getPath();
+        }
 
         jlabels[jlabel_id].setBounds(X, Y, newWidth, newHeight);
         jlabels[jlabel_id].setIcon(opt.Update_Label_PROPS(fileName, newWidth, newHeight));
 
-        System.out.println("LISTW1:" + List_jlabels_stat.get(jlabel_id));
-        SetXYWH(X, Y, newWidth, newHeight, jlabel_id);
-        System.out.println("LISTW2:" + List_jlabels_stat.get(jlabel_id));
+        System.out.println("LISTW1:" + List_jlabels_statField_img.get(jlabel_id));
+        SetXYWH_IMG(X, Y, newWidth, newHeight, jlabel_id);
+        System.out.println("LISTW2:" + List_jlabels_statField_img.get(jlabel_id));
         drop_zone_panel.validate();
         drop_zone_panel.repaint();
     }//GEN-LAST:event_SAVE_W_H_LABELMouseClicked
@@ -516,6 +665,50 @@ public class Main_Frame extends javax.swing.JFrame {
             launcher.setLocationRelativeTo(null);
         }
     }//GEN-LAST:event_EXIT_APPMouseClicked
+
+    private void FILE_SAVEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FILE_SAVEMouseClicked
+        this.SaveProject();
+    }//GEN-LAST:event_FILE_SAVEMouseClicked
+
+    private void Change_Color_Label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_Label1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Change_Color_Label1MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+// FILE_OPTIONS.setLocation(x, y);
+        FILE_OPTIONS.setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void INSERT_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_INSERT_LABELMouseClicked
+        INSERT_OPTIONS.setVisible(true);
+    }//GEN-LAST:event_INSERT_LABELMouseClicked
+
+    private void IN_RAM_METER_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IN_RAM_METER_LABELMouseClicked
+        try {
+            Label_Drop_Image.setText(null);
+            INSERT_OPTIONS.setVisible(false);
+            String typeText = "RAM";
+            Set_jlabel_Basic_Text(typeText, sum_Labels);
+            CreateLabelWithText(sum_Labels);
+            sum_Labels += 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_IN_RAM_METER_LABELMouseClicked
+
+    private void IN_CPU_METER_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IN_CPU_METER_LABELMouseClicked
+        try {
+            Label_Drop_Image.setText(null);
+            INSERT_OPTIONS.setVisible(false);
+            System.out.println("Angka: " + sum_Labels);
+            String typeText = "CPU";
+            Set_jlabel_Basic_Text(typeText, sum_Labels);
+            CreateLabelWithText(sum_Labels);
+            sum_Labels += 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_IN_CPU_METER_LABELMouseClicked
 
     /**
      * @param args the command line arguments
@@ -558,36 +751,81 @@ public class Main_Frame extends javax.swing.JFrame {
 
     private void hideImageOptions() {
         IMG_OPTIONS.setVisible(false);
+        FILE_OPTIONS.setVisible(false);
         SETWIDTH_HEIGHT_DIALOG.setVisible(false);
-        for (int i = 0; i < sum_pictures; i++) {
+        for (int i = 0; i < sum_Labels; i++) {
             Border empty = BorderFactory.createEmptyBorder();
             jlabels[i].setBorder(empty);
         }
     }
 
-    public void AddXYWH(int X, int Y, int W, int H, int id) {
+    public void AddXYWH_IMG(int X, int Y, int W, int H, int id) {
         Map<String, Integer> jlabels_stat = new HashMap<>();
         jlabels_stat.put("X", X);
         jlabels_stat.put("Y", Y);
         jlabels_stat.put("W", W);
         jlabels_stat.put("H", H);
-        List_jlabels_stat.add(id, jlabels_stat);
+        List_jlabels_statField_img.add(id, jlabels_stat);
     }
 
-    public void SetXYWH(int X, int Y, int W, int H, int id) {
+    public void SetXYWH_IMG(int X, int Y, int W, int H, int id) {
         Map<String, Integer> jlabels_stat = new HashMap<>();
         System.out.println("Set XY: " + X + " :" + Y);
         jlabels_stat.put("X", X);
         jlabels_stat.put("Y", Y);
         jlabels_stat.put("W", W);
         jlabels_stat.put("H", H);
-        List_jlabels_stat.set(id, jlabels_stat);
+        List_jlabels_statField_img.set(id, jlabels_stat);
+    }
+
+    public void AddXYWH_TEXT(int X, int Y, int W, int H, int fontSize, int id) {
+        Map<String, Object> jlabels_stat = new HashMap<>();
+        jlabels_stat.put("X", X);
+        jlabels_stat.put("Y", Y);
+        jlabels_stat.put("W", W);
+        jlabels_stat.put("H", H);
+        jlabels_stat.put("FontSize", fontSize);
+        List_jlabels_statField_text.add(id, jlabels_stat);
+    }
+
+    public void SetXYWH_TEXT(int X, int Y, int W, int H, int fontSize, int id) {
+        Map<String, Object> jlabels_stat = new HashMap<>();
+        System.out.println("Set XY: " + X + " :" + Y);
+        jlabels_stat.put("X", X);
+        jlabels_stat.put("Y", Y);
+        jlabels_stat.put("W", W);
+        jlabels_stat.put("H", H);
+        jlabels_stat.put("FontSize", fontSize);
+        List_jlabels_statField_text.set(id, jlabels_stat);
     }
 
     public void Set_jlabel_Basic(File filePath, int id) {
-        Map<String, File> jlabels_stat = new HashMap<>();
+//        Map<String, File> jlabels_stat = new HashMap<>();
+        Map<String, Object> jlabels_stat = new HashMap<>();
+        Map<String, Integer> label_types = new HashMap<>();
         jlabels_stat.put("filePath", filePath);
-        List_jlabels_stat_base.add(id, jlabels_stat);
+        jlabels_stat.put("typeData", 1);
+        label_types.put("type", 1);
+        label_types.put("id_label", id);
+        // 1 for image
+        // 2 for label
+        System.out.println("ERR5");
+        List_labels_type.add(id, label_types);
+        System.out.println("ERR6");
+//        List_jlabels_base_img.add(id, jlabels_stat);
+        List_jlabels_base_sample.add(id, jlabels_stat);
+    }
+
+    public void Set_jlabel_Basic_Text(String textType, int id) {
+        Map<String, String> jlabels_stat = new HashMap<>();
+        Map<String, Integer> label_types = new HashMap<>();
+        jlabels_stat.put("textType", textType);
+        label_types.put("type", 2);
+        label_types.put("id_label", id);
+        // 1 for image
+        // 2 for label
+        List_labels_type.add(id, label_types);
+        List_jlabels_base_text.add(id, jlabels_stat);
     }
 
     public void CreateLabelWithImage(int id) {
@@ -595,8 +833,17 @@ public class Main_Frame extends javax.swing.JFrame {
             System.out.println("IM CALLED?");
 //            Options_Script ops = new Options_Script();
             BufferedImage img = null;
-            Map<String, File> jlabel_file_img = List_jlabels_stat_base.get(id);
-            img = ImageIO.read(jlabel_file_img.get("filePath"));
+//            Map<String, File> jlabel_file_img = List_jlabels_base_img.get(id);
+            Options_Script opt = new Options_Script();
+            Map<String, Object> jlabel_file_img = List_jlabels_base_sample.get(id);
+            int TypeData = opt.ConvertObjectToInt(jlabel_file_img.get("typeData"));
+            File fileData = opt.ConvertObjectToFile(jlabel_file_img.get("filePath"));
+            String fileName = null;
+            if (TypeData == 1) {
+                fileName = fileData.getPath();
+            }
+            
+            img = ImageIO.read(fileData);
             int Scale = 0;
             int Pref_Size = 200;
             if (img.getWidth() > img.getHeight()) {
@@ -608,17 +855,17 @@ public class Main_Frame extends javax.swing.JFrame {
             int img_maxheight = img.getHeight() / Scale;
             Image dimg = img.getScaledInstance(img_maxwidth, img_maxheight, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(dimg);
-            jlabels[id] = new JLabel("Label" + sum_pictures);
+            jlabels[id] = new JLabel("Label" + sum_Labels);
             jlabels[id].setIcon(icon);
-            jlabels[id].setBounds(1, 1 + (sum_pictures * 20), img_maxwidth, img_maxheight);
-            this.AddXYWH(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
+            jlabels[id].setBounds(1, 1 + (sum_Labels * 20), img_maxwidth, img_maxheight);
+            this.AddXYWH_IMG(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
             jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
             jlabels[id].addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
                     int x = e.getXOnScreen();
                     int y = e.getYOnScreen();
-                    SetXYWH(jlabels[id].getX(), jlabels[id].getY(), jlabels[id].getWidth(), jlabels[id].getHeight(), id);
+                    SetXYWH_IMG(jlabels[id].getX(), jlabels[id].getY(), jlabels[id].getWidth(), jlabels[id].getHeight(), id);
 
                     jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
                 }
@@ -641,6 +888,84 @@ public class Main_Frame extends javax.swing.JFrame {
                         Jlabel_OPTIONS_ID.setText("" + id);
                         //System.out.println("Right Worked");
                     }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    xImage_POS = e.getX();
+                    yImage_POS = e.getY();
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+            drop_zone_panel.add(jlabels[id]);
+            drop_zone_panel.validate();
+            drop_zone_panel.repaint();
+        } catch (Exception e) {
+        }
+    }
+
+    public void CreateLabelWithText(int id) {
+        try {
+            System.out.println("LABEL ID: " + id);
+            Map<String, String> jlabel_file_texts = List_jlabels_base_text.get(id);
+            jlabels[id] = new JLabel("Label" + sum_Labels);
+            int fontSizeDefault = 16;
+            Font defaultFont = new Font("Times New Roman", Font.PLAIN, fontSizeDefault);
+            switch (jlabel_file_texts.get("textType")) {
+                case "RAM":
+                    jlabels[id].setText("RAM");
+                    jlabels[id].setForeground(Color.red);
+                    jlabels[id].setFont(defaultFont);
+                    break;
+                default:
+                    jlabels[id].setText("String Text");
+                    jlabels[id].setForeground(Color.red);
+                    jlabels[id].setBackground(Color.red);
+                // code block
+            }
+            int MaxWidth = (3 * fontSizeDefault);
+            int MaxHeight = (2 * fontSizeDefault) - 4;
+            jlabels[id].setBounds(5 * fontSizeDefault, ((sum_Labels + 1) * 4 * fontSizeDefault), MaxWidth, MaxHeight);
+            this.AddXYWH_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id);
+            jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+            jlabels[id].addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    int x = e.getXOnScreen();
+                    int y = e.getYOnScreen();
+                    SetXYWH_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id);
+                    jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                }
+            });
+            jlabels[id].addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
+                    jlabels[id].setBorder(grayBorder);
+//                    if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
+//                        int x = e.getXOnScreen();
+//                        int y = e.getYOnScreen();
+//                        IMG_OPTIONS.setLocation(x, y);
+//                        IMG_OPTIONS.setVisible(true);
+//                        Jlabel_OPTIONS_ID.setText("" + id);
+//                        //System.out.println("Right Worked");
+//                    }
                 }
 
                 @Override
@@ -750,49 +1075,30 @@ public class Main_Frame extends javax.swing.JFrame {
             Runnable run = new Runnable() {
                 @Override
                 public void run() {
-                    String path_local = "src/images/";
-                    if (sum_pictures <= 10) {
+                    int jumlahSize = List_labels_type.size();
+//                    sum_Labels =jumlahSize;
+                    if (sum_Labels <= 10) {
                         try {
                             Label_Drop_Image.setText(null);
-                            System.out.println("Angka: " + sum_pictures);
+                            System.out.println("Angka LIST LABEL: " + jumlahSize);
                             System.out.println("files.size(): " + files.size());
-                            if (sum_pictures == 0) {
+                            System.out.println("sum_Labels " + sum_Labels);
+                            if (sum_Labels == 0) {
                                 for (int i = 0; i < files.size(); i++) {
-//                                    FileOutputStream out = null;
-//                                    FileInputStream in = null;
-//                                    int cursor;
-//                                    String fileName = "TempImage" + i;
-//                                    System.out.println("GAMBAR: " + files.get(i));
-//                                    in = new FileInputStream((File) files.get(i));
-//                                    out = new FileOutputStream(path_local + fileName + ".png");
-//                                    String a = String.
-//                                    System.out.println("PATH FILES: " + files.get(i));
+                                    System.out.println("ERR!");
                                     Set_jlabel_Basic((File) files.get(i), i);
-//                                    System.out.println("GAMBAR NEXT: " + fileName);
-//                                    while ((cursor = in.read()) != -1) {
-//                                        out.write(cursor);
-//                                    }
                                     CreateLabelWithImage(i);
                                 }
-                                sum_pictures = files.size();
+                                sum_Labels = files.size();
                             } else {
-                                for (int i = sum_pictures; i < (sum_pictures + files.size()); i++) {
-//                                    System.out.println("nilai I: " + i);
-//                                    FileOutputStream out = null;
-//                                    FileInputStream in = null;
-//                                    int cursor;
-//                                    String fileName = "TempImage" + i;
-//                                    System.out.println("GAMBAR: " + files.get(i - sum_pictures));
-//                                    in = new FileInputStream((File) files.get(i - sum_pictures));
-//                                    out = new FileOutputStream(path_local + fileName + ".png");
-//                                    System.out.println("GAMBAR NEXT: " + fileName);
-                                    Set_jlabel_Basic((File) files.get(i - sum_pictures), i);
-//                                    while ((cursor = in.read()) != -1) {
-//                                        out.write(cursor);
-//                                    }
+                                for (int i = sum_Labels; i < (sum_Labels + files.size()); i++) {
+                                    System.out.println("ERR2");
+                                    Set_jlabel_Basic((File) files.get(i - sum_Labels), i);
+                                    System.out.println("ERR3");
                                     CreateLabelWithImage(i);
+                                    System.out.println("ERR4");
                                 }
-                                sum_pictures += files.size();
+                                sum_Labels += files.size();
                             }
 
 //                        File pathToFile = new File("TestImage.png");
@@ -944,10 +1250,20 @@ public class Main_Frame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Change_Color_Label;
+    private javax.swing.JLabel Change_Color_Label1;
     private javax.swing.JPanel Choose_File_Panel;
     private javax.swing.JLabel EXIT_APP;
+    private javax.swing.JPanel FILE_LABEL;
+    private javax.swing.JPanel FILE_OPTIONS;
+    private javax.swing.JLabel FILE_SAVE;
     private javax.swing.JPanel IMG_OPTIONS;
+    private javax.swing.JLabel INSERT_LABEL;
+    private javax.swing.JPanel INSERT_OPTIONS;
+    private javax.swing.JLabel IN_CPU_METER_LABEL;
+    private javax.swing.JLabel IN_RAM_METER_LABEL;
     private javax.swing.JLabel Jlabel_OPTIONS_ID;
+    private javax.swing.JLabel Jlabel_OPTIONS_ID1;
+    private javax.swing.JLabel Jlabel_OPTIONS_ID2;
     private javax.swing.JLabel Label_Drop_Image;
     private javax.swing.JLabel RESIZE_ID;
     private javax.swing.JLabel RESIZE_LABEL;
@@ -959,10 +1275,10 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JPanel drop_zone_panel;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

@@ -44,4 +44,12 @@ public class Options_Script {
         ImageIcon icon = new ImageIcon(dimg);
         return icon;
     }
+    public int ConvertObjectToInt(Object values) {
+        int valueConvert = (Integer) values;
+        return valueConvert;
+    }
+    public File ConvertObjectToFile(Object values) {
+        File valueConvert = (File) values;
+        return valueConvert;
+    }
 }

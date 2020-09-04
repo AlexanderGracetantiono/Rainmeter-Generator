@@ -48,8 +48,16 @@ public class Options_Script {
         int valueConvert = (Integer) values;
         return valueConvert;
     }
+    public Color ConvertObjectToColor(Object values) {
+        Color valueConvert = (Color) values;
+        return valueConvert;
+    }
     public File ConvertObjectToFile(Object values) {
         File valueConvert = (File) values;
+        return valueConvert;
+    }
+    public String ConvertObjectToString(Object values) {
+        String valueConvert = (String) values;
         return valueConvert;
     }
 }

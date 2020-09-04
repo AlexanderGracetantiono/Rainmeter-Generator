@@ -78,15 +78,11 @@ public class Main_Frame extends javax.swing.JFrame {
     String[] jlabels_coordinat = new String[10];
 
     private int sum_Labels = 0;
-    private int jlabels_SUM_ID = 0;
-    List<Map<String, Integer>> List_jlabels_statField_img = new ArrayList<Map<String, Integer>>();
-    List<Map<String, Object>> List_jlabels_statField_text = new ArrayList<Map<String, Object>>();
-    List<Map<String, File>> List_jlabels_base_img = new ArrayList<Map<String, File>>();
+    List<Map<String, Object>> List_jlabels_statField_label = new ArrayList<Map<String, Object>>();
     List<Map<String, Object>> List_jlabels_base_sample = new ArrayList<Map<String, Object>>();
-    List<Map<String, String>> List_jlabels_base_text = new ArrayList<Map<String, String>>();
 
-    List<Map<String, Integer>> List_labels_type = new ArrayList<Map<String, Integer>>();
     JOptionPane alertBox = new JOptionPane();
+    Options_Script opt = new Options_Script();
 
     /**
      * Creates new form TestLayout
@@ -112,9 +108,9 @@ public class Main_Frame extends javax.swing.JFrame {
         drop_zone_panel = new DropPane();
         Label_Drop_Image = new javax.swing.JLabel();
         IMG_OPTIONS = new javax.swing.JPanel();
-        RESIZE_LABEL = new javax.swing.JLabel();
-        Change_Color_Label = new javax.swing.JLabel();
-        Jlabel_OPTIONS_ID = new javax.swing.JLabel();
+        RESIZE_LABEL_IMG = new javax.swing.JLabel();
+        Change_Color_IMG = new javax.swing.JLabel();
+        Jlabel_OPTIONS_IMG_ID = new javax.swing.JLabel();
         SETWIDTH_HEIGHT_DIALOG = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -139,6 +135,21 @@ public class Main_Frame extends javax.swing.JFrame {
         IN_RAM_METER_LABEL = new javax.swing.JLabel();
         Jlabel_OPTIONS_ID2 = new javax.swing.JLabel();
         IN_CPU_METER_LABEL = new javax.swing.JLabel();
+        COLOR_PICKER_PANEL = new javax.swing.JPanel();
+        jColorChooser1 = new javax.swing.JColorChooser();
+        LABEL_OPTIONS = new javax.swing.JPanel();
+        Change_Color_LABEL = new javax.swing.JLabel();
+        Jlabel_OPTIONS_LABEL_ID = new javax.swing.JLabel();
+        Font_Styling_Label = new javax.swing.JLabel();
+        SETFONTSIZE_DIALOG = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        SET_FONTSIZE_INPUT = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        SET_HEIGHT_INPUT1 = new javax.swing.JTextField();
+        FONTSTYLING_ID = new javax.swing.JLabel();
+        SAVE_FONTSTYLING_LABEL = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -185,24 +196,24 @@ public class Main_Frame extends javax.swing.JFrame {
         IMG_OPTIONS.setBackground(new java.awt.Color(27, 38, 44));
         IMG_OPTIONS.setMaximumSize(new java.awt.Dimension(120, 140));
 
-        RESIZE_LABEL.setForeground(new java.awt.Color(187, 225, 250));
-        RESIZE_LABEL.setText("Resize");
-        RESIZE_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        RESIZE_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+        RESIZE_LABEL_IMG.setForeground(new java.awt.Color(187, 225, 250));
+        RESIZE_LABEL_IMG.setText("Resize");
+        RESIZE_LABEL_IMG.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        RESIZE_LABEL_IMG.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RESIZE_LABELMouseClicked(evt);
+                RESIZE_LABEL_IMGMouseClicked(evt);
             }
         });
 
-        Change_Color_Label.setForeground(new java.awt.Color(187, 225, 250));
-        Change_Color_Label.setText("Change Color");
-        Change_Color_Label.addMouseListener(new java.awt.event.MouseAdapter() {
+        Change_Color_IMG.setForeground(new java.awt.Color(187, 225, 250));
+        Change_Color_IMG.setText("Change Color");
+        Change_Color_IMG.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Change_Color_LabelMouseClicked(evt);
+                Change_Color_IMGMouseClicked(evt);
             }
         });
 
-        Jlabel_OPTIONS_ID.setText("jlabelID");
+        Jlabel_OPTIONS_IMG_ID.setText("jlabelID");
 
         javax.swing.GroupLayout IMG_OPTIONSLayout = new javax.swing.GroupLayout(IMG_OPTIONS);
         IMG_OPTIONS.setLayout(IMG_OPTIONSLayout);
@@ -211,25 +222,25 @@ public class Main_Frame extends javax.swing.JFrame {
             .addGroup(IMG_OPTIONSLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Change_Color_Label, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                    .addComponent(RESIZE_LABEL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Jlabel_OPTIONS_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Change_Color_IMG, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(RESIZE_LABEL_IMG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Jlabel_OPTIONS_IMG_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         IMG_OPTIONSLayout.setVerticalGroup(
             IMG_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IMG_OPTIONSLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(RESIZE_LABEL)
+                .addComponent(RESIZE_LABEL_IMG)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Change_Color_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Change_Color_IMG, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(Jlabel_OPTIONS_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Jlabel_OPTIONS_IMG_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         drop_zone_panel.add(IMG_OPTIONS);
-        IMG_OPTIONS.setBounds(860, 230, 120, 140);
+        IMG_OPTIONS.setBounds(0, 310, 120, 140);
         IMG_OPTIONS.setVisible(false);
 
         SETWIDTH_HEIGHT_DIALOG.setBackground(new java.awt.Color(27, 38, 44));
@@ -328,7 +339,7 @@ public class Main_Frame extends javax.swing.JFrame {
         );
 
         drop_zone_panel.add(SETWIDTH_HEIGHT_DIALOG);
-        SETWIDTH_HEIGHT_DIALOG.setBounds(860, 390, 240, 160);
+        SETWIDTH_HEIGHT_DIALOG.setBounds(-120, 460, 240, 160);
 
         FILE_LABEL.setBackground(new java.awt.Color(27, 38, 44));
         FILE_LABEL.setPreferredSize(new java.awt.Dimension(1920, 50));
@@ -410,11 +421,11 @@ public class Main_Frame extends javax.swing.JFrame {
             .addGroup(Choose_File_PanelLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         drop_zone_panel.add(Choose_File_Panel);
-        Choose_File_Panel.setBounds(150, 250, 700, 510);
+        Choose_File_Panel.setBounds(1240, 140, 700, 540);
 
         checkCustomPath.setText("Save File");
         checkCustomPath.addActionListener(new java.awt.event.ActionListener() {
@@ -529,6 +540,173 @@ public class Main_Frame extends javax.swing.JFrame {
         INSERT_OPTIONS.setBounds(110, 50, 170, 250);
         IMG_OPTIONS.setVisible(false);
 
+        javax.swing.GroupLayout COLOR_PICKER_PANELLayout = new javax.swing.GroupLayout(COLOR_PICKER_PANEL);
+        COLOR_PICKER_PANEL.setLayout(COLOR_PICKER_PANELLayout);
+        COLOR_PICKER_PANELLayout.setHorizontalGroup(
+            COLOR_PICKER_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(COLOR_PICKER_PANELLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+        COLOR_PICKER_PANELLayout.setVerticalGroup(
+            COLOR_PICKER_PANELLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(COLOR_PICKER_PANELLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        drop_zone_panel.add(COLOR_PICKER_PANEL);
+        COLOR_PICKER_PANEL.setBounds(1210, 50, 670, 390);
+
+        LABEL_OPTIONS.setBackground(new java.awt.Color(27, 38, 44));
+        LABEL_OPTIONS.setMaximumSize(new java.awt.Dimension(120, 140));
+
+        Change_Color_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        Change_Color_LABEL.setText("Change Color");
+        Change_Color_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Change_Color_LABELMouseClicked(evt);
+            }
+        });
+
+        Jlabel_OPTIONS_LABEL_ID.setText("jlabelID");
+
+        Font_Styling_Label.setForeground(new java.awt.Color(187, 225, 250));
+        Font_Styling_Label.setText("Font Styling");
+        Font_Styling_Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Font_Styling_LabelMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LABEL_OPTIONSLayout = new javax.swing.GroupLayout(LABEL_OPTIONS);
+        LABEL_OPTIONS.setLayout(LABEL_OPTIONSLayout);
+        LABEL_OPTIONSLayout.setHorizontalGroup(
+            LABEL_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LABEL_OPTIONSLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(LABEL_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Change_Color_LABEL, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(Jlabel_OPTIONS_LABEL_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Font_Styling_Label, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        LABEL_OPTIONSLayout.setVerticalGroup(
+            LABEL_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LABEL_OPTIONSLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Change_Color_LABEL, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Font_Styling_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(Jlabel_OPTIONS_LABEL_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        drop_zone_panel.add(LABEL_OPTIONS);
+        LABEL_OPTIONS.setBounds(120, 310, 120, 140);
+        IMG_OPTIONS.setVisible(false);
+
+        SETFONTSIZE_DIALOG.setBackground(new java.awt.Color(27, 38, 44));
+        SETFONTSIZE_DIALOG.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.white, null, null));
+
+        jLabel5.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel5.setText("Set Font Size");
+
+        jPanel2.setBackground(new java.awt.Color(15, 76, 117));
+
+        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel6.setText("Font Styling Setting");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(45, 45, 45))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+
+        SET_FONTSIZE_INPUT.setBackground(new java.awt.Color(27, 38, 44));
+        SET_FONTSIZE_INPUT.setForeground(new java.awt.Color(187, 225, 250));
+        SET_FONTSIZE_INPUT.setText("0");
+
+        jLabel7.setForeground(new java.awt.Color(187, 225, 250));
+        jLabel7.setText("Set Height :");
+
+        SET_HEIGHT_INPUT1.setBackground(new java.awt.Color(27, 38, 44));
+        SET_HEIGHT_INPUT1.setForeground(new java.awt.Color(187, 225, 250));
+        SET_HEIGHT_INPUT1.setText("0");
+
+        FONTSTYLING_ID.setText("ID");
+
+        SAVE_FONTSTYLING_LABEL.setBackground(new java.awt.Color(27, 38, 44));
+        SAVE_FONTSTYLING_LABEL.setForeground(new java.awt.Color(187, 225, 250));
+        SAVE_FONTSTYLING_LABEL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SAVE_FONTSTYLING_LABEL.setText("Save");
+        SAVE_FONTSTYLING_LABEL.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SAVE_FONTSTYLING_LABEL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SAVE_FONTSTYLING_LABELMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SETFONTSIZE_DIALOGLayout = new javax.swing.GroupLayout(SETFONTSIZE_DIALOG);
+        SETFONTSIZE_DIALOG.setLayout(SETFONTSIZE_DIALOGLayout);
+        SETFONTSIZE_DIALOGLayout.setHorizontalGroup(
+            SETFONTSIZE_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(SETFONTSIZE_DIALOGLayout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(FONTSTYLING_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
+            .addGroup(SETFONTSIZE_DIALOGLayout.createSequentialGroup()
+                .addGroup(SETFONTSIZE_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SETFONTSIZE_DIALOGLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(SETFONTSIZE_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(SET_HEIGHT_INPUT1, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(SET_FONTSIZE_INPUT)))
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(SAVE_FONTSTYLING_LABEL, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        SETFONTSIZE_DIALOGLayout.setVerticalGroup(
+            SETFONTSIZE_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SETFONTSIZE_DIALOGLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SETFONTSIZE_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(FONTSTYLING_ID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SET_FONTSIZE_INPUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SETFONTSIZE_DIALOGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SET_HEIGHT_INPUT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SAVE_FONTSTYLING_LABEL))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        drop_zone_panel.add(SETFONTSIZE_DIALOG);
+        SETFONTSIZE_DIALOG.setBounds(280, 50, 240, 160);
+
         getContentPane().add(drop_zone_panel);
 
         pack();
@@ -539,6 +717,9 @@ public class Main_Frame extends javax.swing.JFrame {
         Choose_File_Panel.setVisible(false);
         INSERT_OPTIONS.setVisible(false);
         FILE_OPTIONS.setVisible(false);
+        COLOR_PICKER_PANEL.setVisible(false);
+        LABEL_OPTIONS.setVisible(false);
+        SETFONTSIZE_DIALOG.setVisible(false);
     }
 
     private void drop_zone_panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drop_zone_panelMousePressed
@@ -560,6 +741,24 @@ public class Main_Frame extends javax.swing.JFrame {
 //        y2 = y;
 //        this.setLocation(x - xMouseInDeskTopBackground, y - yMouseInDeskTopBackground);
     }//GEN-LAST:event_drop_zone_panelMouseDragged
+    private void PickColor() {
+        Color newColor = jColorChooser1.showDialog(null, "Choose a color", Color.RED);
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_LABEL_ID.getText());
+        Map<String, Object> jlabel_LABEL_STAT = List_jlabels_statField_label.get(jlabel_id);
+
+        jlabels[jlabel_id].setForeground(newColor);
+        int newWidth = jlabels[jlabel_id].getWidth();
+        int newHeight = jlabels[jlabel_id].getHeight();
+        int X = jlabels[jlabel_id].getX();
+        int Y = jlabels[jlabel_id].getY();
+        int FontSize = opt.ConvertObjectToInt(jlabel_LABEL_STAT.get("FontSize"));
+
+        SetXYWHFIC_TEXT(X, Y, newWidth, newHeight, FontSize, jlabel_id, newColor);
+        drop_zone_panel.validate();
+        drop_zone_panel.repaint();
+        System.out.println("COLORPICK: " + newColor);
+    }
+
     private void SaveProject() {
         if (jFileChooser1.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             System.out.println("getCurrentDirectory(): "
@@ -572,7 +771,7 @@ public class Main_Frame extends javax.swing.JFrame {
             Export_Script exp = new Export_Script(fileName, namaID, namaProject, jFileChooser1.getSelectedFile());
             exp.CreateDirectory();
             exp.PutFileINIinPROJECT();
-            exp.PutFileImageinRes(sum_Labels, List_jlabels_statField_img, List_jlabels_base_img, List_jlabels_statField_text, List_jlabels_base_text, List_labels_type);
+            exp.PutFileImageinRes(sum_Labels, List_jlabels_statField_label, List_jlabels_base_sample);
         } else {
             System.out.println("No Selection ");
         }
@@ -582,18 +781,17 @@ public class Main_Frame extends javax.swing.JFrame {
         this.SaveProject();
     }//GEN-LAST:event_checkCustomPathActionPerformed
 
-    private void Change_Color_LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_LabelMouseClicked
+    private void Change_Color_IMGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_IMGMouseClicked
         hideImageOptions();
-        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_IMG_ID.getText());
         jlabels[jlabel_id].getIcon();
         String fileName = "TempImage" + jlabel_id;
-        Options_Script ops = new Options_Script();
         try {
 
             BufferedImage img_input = null;
             BufferedImage img = null;
             img_input = ImageIO.read(new File(path_local + fileName + ".png"));
-            img = ops.colorImage(img_input, 255, 0, 0);
+            img = opt.colorImage(img_input, 255, 0, 0);
             int Scale = 0;
             int Pref_Size = 200;
             if (img.getWidth() > img.getHeight()) {
@@ -613,30 +811,27 @@ public class Main_Frame extends javax.swing.JFrame {
             System.out.println("ERR: " + e);
         }
 
-    }//GEN-LAST:event_Change_Color_LabelMouseClicked
+    }//GEN-LAST:event_Change_Color_IMGMouseClicked
 
-    private void RESIZE_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RESIZE_LABELMouseClicked
+    private void RESIZE_LABEL_IMGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RESIZE_LABEL_IMGMouseClicked
         IMG_OPTIONS.setVisible(false);
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_IMG_ID.getText());
         SETWIDTH_HEIGHT_DIALOG.setVisible(true);
         SETWIDTH_HEIGHT_DIALOG.setLocation(x, y);
         SET_WIDTH_INPUT.setText("" + jlabels[jlabel_id].getWidth());
         SET_HEIGHT_INPUT.setText("" + jlabels[jlabel_id].getHeight());
         RESIZE_ID.setText("" + jlabel_id);
-
-    }//GEN-LAST:event_RESIZE_LABELMouseClicked
+    }//GEN-LAST:event_RESIZE_LABEL_IMGMouseClicked
 
     private void SAVE_W_H_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SAVE_W_H_LABELMouseClicked
         SETWIDTH_HEIGHT_DIALOG.setVisible(false);
-        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_ID.getText());
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_IMG_ID.getText());
         int newWidth = Integer.parseInt(SET_WIDTH_INPUT.getText());
         int newHeight = Integer.parseInt(SET_HEIGHT_INPUT.getText());
         int X = jlabels[jlabel_id].getX();
         int Y = jlabels[jlabel_id].getY();
-        Options_Script opt = new Options_Script();
-//        Map<String, File> jlabel_file_img = List_jlabels_base_img.get(jlabel_id);
         Map<String, Object> jlabel_file_img = List_jlabels_base_sample.get(jlabel_id);
         int TypeData = opt.ConvertObjectToInt(jlabel_file_img.get("typeData"));
         File fileData = opt.ConvertObjectToFile(jlabel_file_img.get("filePath"));
@@ -648,11 +843,10 @@ public class Main_Frame extends javax.swing.JFrame {
         jlabels[jlabel_id].setBounds(X, Y, newWidth, newHeight);
         jlabels[jlabel_id].setIcon(opt.Update_Label_PROPS(fileName, newWidth, newHeight));
 
-        System.out.println("LISTW1:" + List_jlabels_statField_img.get(jlabel_id));
         SetXYWH_IMG(X, Y, newWidth, newHeight, jlabel_id);
-        System.out.println("LISTW2:" + List_jlabels_statField_img.get(jlabel_id));
         drop_zone_panel.validate();
         drop_zone_panel.repaint();
+
     }//GEN-LAST:event_SAVE_W_H_LABELMouseClicked
 
     private void EXIT_APPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EXIT_APPMouseClicked
@@ -668,6 +862,7 @@ public class Main_Frame extends javax.swing.JFrame {
 
     private void FILE_SAVEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FILE_SAVEMouseClicked
         this.SaveProject();
+        FILE_OPTIONS.setVisible(false);
     }//GEN-LAST:event_FILE_SAVEMouseClicked
 
     private void Change_Color_Label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_Label1MouseClicked
@@ -709,6 +904,38 @@ public class Main_Frame extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_IN_CPU_METER_LABELMouseClicked
+
+    private void Change_Color_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_LABELMouseClicked
+        this.PickColor();
+    }//GEN-LAST:event_Change_Color_LABELMouseClicked
+
+    private void SAVE_FONTSTYLING_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SAVE_FONTSTYLING_LABELMouseClicked
+        SETFONTSIZE_DIALOG.setVisible(false);
+        int fontSize = Integer.parseInt(SET_FONTSIZE_INPUT.getText());
+//        Color newColor = jColorChooser1.showDialog(null, "Choose a color", Color.RED);
+        Font newFont = new Font("Times New Roman", Font.PLAIN, fontSize);
+        int jlabel_id = Integer.parseInt(Jlabel_OPTIONS_LABEL_ID.getText());
+        Map<String, Object> jlabel_LABEL_STAT = List_jlabels_statField_label.get(jlabel_id);
+
+        jlabels[jlabel_id].setFont(newFont);
+        int X = jlabels[jlabel_id].getX();
+        int Y = jlabels[jlabel_id].getY();
+//        int FontSize = opt.ConvertObjectToInt(jlabel_LABEL_STAT.get("FontSize"));
+        Color oldColor = opt.ConvertObjectToColor(jlabel_LABEL_STAT.get("FontColor"));
+        int MaxWidth = (3 * fontSize);
+        int MaxHeight = (2 * fontSize) - 4;
+        System.out.println("DTAA:"+MaxHeight+":?"+MaxWidth);
+        jlabels[jlabel_id].setBounds(X, Y, MaxWidth, MaxHeight);
+        SetXYWHFIC_TEXT(X, Y, MaxWidth, MaxHeight, fontSize, jlabel_id, oldColor);
+        drop_zone_panel.validate();
+        drop_zone_panel.repaint();
+    }//GEN-LAST:event_SAVE_FONTSTYLING_LABELMouseClicked
+
+    private void Font_Styling_LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Font_Styling_LabelMouseClicked
+        SETFONTSIZE_DIALOG.setVisible(true);
+        LABEL_OPTIONS.setVisible(false);
+
+    }//GEN-LAST:event_Font_Styling_LabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -752,6 +979,7 @@ public class Main_Frame extends javax.swing.JFrame {
     private void hideImageOptions() {
         IMG_OPTIONS.setVisible(false);
         FILE_OPTIONS.setVisible(false);
+        LABEL_OPTIONS.setVisible(false);
         SETWIDTH_HEIGHT_DIALOG.setVisible(false);
         for (int i = 0; i < sum_Labels; i++) {
             Border empty = BorderFactory.createEmptyBorder();
@@ -760,81 +988,72 @@ public class Main_Frame extends javax.swing.JFrame {
     }
 
     public void AddXYWH_IMG(int X, int Y, int W, int H, int id) {
-        Map<String, Integer> jlabels_stat = new HashMap<>();
+        Map<String, Object> jlabels_stat = new HashMap<>();
         jlabels_stat.put("X", X);
         jlabels_stat.put("Y", Y);
         jlabels_stat.put("W", W);
         jlabels_stat.put("H", H);
-        List_jlabels_statField_img.add(id, jlabels_stat);
+        List_jlabels_statField_label.add(id, jlabels_stat);
     }
 
     public void SetXYWH_IMG(int X, int Y, int W, int H, int id) {
-        Map<String, Integer> jlabels_stat = new HashMap<>();
-        System.out.println("Set XY: " + X + " :" + Y);
-        jlabels_stat.put("X", X);
-        jlabels_stat.put("Y", Y);
-        jlabels_stat.put("W", W);
-        jlabels_stat.put("H", H);
-        List_jlabels_statField_img.set(id, jlabels_stat);
-    }
-
-    public void AddXYWH_TEXT(int X, int Y, int W, int H, int fontSize, int id) {
-        Map<String, Object> jlabels_stat = new HashMap<>();
-        jlabels_stat.put("X", X);
-        jlabels_stat.put("Y", Y);
-        jlabels_stat.put("W", W);
-        jlabels_stat.put("H", H);
-        jlabels_stat.put("FontSize", fontSize);
-        List_jlabels_statField_text.add(id, jlabels_stat);
-    }
-
-    public void SetXYWH_TEXT(int X, int Y, int W, int H, int fontSize, int id) {
         Map<String, Object> jlabels_stat = new HashMap<>();
         System.out.println("Set XY: " + X + " :" + Y);
         jlabels_stat.put("X", X);
         jlabels_stat.put("Y", Y);
         jlabels_stat.put("W", W);
         jlabels_stat.put("H", H);
+        List_jlabels_statField_label.set(id, jlabels_stat);
+    }
+
+    public void AddXYWHFIC_TEXT(int X, int Y, int W, int H, int fontSize, int id, Color font_color) {
+        Map<String, Object> jlabels_stat = new HashMap<>();
+        jlabels_stat.put("X", X);
+        jlabels_stat.put("Y", Y);
+        jlabels_stat.put("W", W);
+        jlabels_stat.put("H", H);
         jlabels_stat.put("FontSize", fontSize);
-        List_jlabels_statField_text.set(id, jlabels_stat);
+        jlabels_stat.put("FontColor", font_color);
+        List_jlabels_statField_label.add(id, jlabels_stat);
+    }
+
+    public void SetXYWHFIC_TEXT(int X, int Y, int W, int H, int fontSize, int id, Color font_color) {
+        Map<String, Object> jlabels_stat = new HashMap<>();
+        System.out.println("Set XY: " + X + " :" + Y);
+        jlabels_stat.put("X", X);
+        jlabels_stat.put("Y", Y);
+        jlabels_stat.put("W", W);
+        jlabels_stat.put("H", H);
+        jlabels_stat.put("FontSize", fontSize);
+        jlabels_stat.put("FontColor", font_color);
+        List_jlabels_statField_label.set(id, jlabels_stat);
     }
 
     public void Set_jlabel_Basic(File filePath, int id) {
 //        Map<String, File> jlabels_stat = new HashMap<>();
         Map<String, Object> jlabels_stat = new HashMap<>();
-        Map<String, Integer> label_types = new HashMap<>();
         jlabels_stat.put("filePath", filePath);
         jlabels_stat.put("typeData", 1);
-        label_types.put("type", 1);
-        label_types.put("id_label", id);
         // 1 for image
         // 2 for label
-        System.out.println("ERR5");
-        List_labels_type.add(id, label_types);
         System.out.println("ERR6");
-//        List_jlabels_base_img.add(id, jlabels_stat);
         List_jlabels_base_sample.add(id, jlabels_stat);
     }
 
     public void Set_jlabel_Basic_Text(String textType, int id) {
-        Map<String, String> jlabels_stat = new HashMap<>();
-        Map<String, Integer> label_types = new HashMap<>();
+        Map<String, Object> jlabels_stat = new HashMap<>();
         jlabels_stat.put("textType", textType);
-        label_types.put("type", 2);
-        label_types.put("id_label", id);
+        jlabels_stat.put("typeData", 2);
         // 1 for image
         // 2 for label
-        List_labels_type.add(id, label_types);
-        List_jlabels_base_text.add(id, jlabels_stat);
+        List_jlabels_base_sample.add(id, jlabels_stat);
     }
 
     public void CreateLabelWithImage(int id) {
         try {
             System.out.println("IM CALLED?");
-//            Options_Script ops = new Options_Script();
             BufferedImage img = null;
-//            Map<String, File> jlabel_file_img = List_jlabels_base_img.get(id);
-            Options_Script opt = new Options_Script();
+
             Map<String, Object> jlabel_file_img = List_jlabels_base_sample.get(id);
             int TypeData = opt.ConvertObjectToInt(jlabel_file_img.get("typeData"));
             File fileData = opt.ConvertObjectToFile(jlabel_file_img.get("filePath"));
@@ -842,7 +1061,7 @@ public class Main_Frame extends javax.swing.JFrame {
             if (TypeData == 1) {
                 fileName = fileData.getPath();
             }
-            
+
             img = ImageIO.read(fileData);
             int Scale = 0;
             int Pref_Size = 200;
@@ -885,8 +1104,7 @@ public class Main_Frame extends javax.swing.JFrame {
                         int y = e.getYOnScreen();
                         IMG_OPTIONS.setLocation(x, y);
                         IMG_OPTIONS.setVisible(true);
-                        Jlabel_OPTIONS_ID.setText("" + id);
-                        //System.out.println("Right Worked");
+                        Jlabel_OPTIONS_IMG_ID.setText("" + id);
                     }
                 }
 
@@ -918,13 +1136,20 @@ public class Main_Frame extends javax.swing.JFrame {
     public void CreateLabelWithText(int id) {
         try {
             System.out.println("LABEL ID: " + id);
-            Map<String, String> jlabel_file_texts = List_jlabels_base_text.get(id);
+            Map<String, Object> jlabel_file_texts = List_jlabels_base_sample.get(id);
             jlabels[id] = new JLabel("Label" + sum_Labels);
             int fontSizeDefault = 16;
             Font defaultFont = new Font("Times New Roman", Font.PLAIN, fontSizeDefault);
-            switch (jlabel_file_texts.get("textType")) {
+//            jlabel_file_texts.get("textType")
+            Color watna = new Color(id, id, id);
+            switch (opt.ConvertObjectToString(jlabel_file_texts.get("textType"))) {
                 case "RAM":
                     jlabels[id].setText("RAM");
+                    jlabels[id].setForeground(Color.red);
+                    jlabels[id].setFont(defaultFont);
+                    break;
+                case "CPU":
+                    jlabels[id].setText("CPU");
                     jlabels[id].setForeground(Color.red);
                     jlabels[id].setFont(defaultFont);
                     break;
@@ -937,14 +1162,14 @@ public class Main_Frame extends javax.swing.JFrame {
             int MaxWidth = (3 * fontSizeDefault);
             int MaxHeight = (2 * fontSizeDefault) - 4;
             jlabels[id].setBounds(5 * fontSizeDefault, ((sum_Labels + 1) * 4 * fontSizeDefault), MaxWidth, MaxHeight);
-            this.AddXYWH_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id);
+            this.AddXYWHFIC_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id, Color.red);
             jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
             jlabels[id].addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
                     int x = e.getXOnScreen();
                     int y = e.getYOnScreen();
-                    SetXYWH_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id);
+                    SetXYWHFIC_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id, Color.red);
                     jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
                 }
 
@@ -958,14 +1183,13 @@ public class Main_Frame extends javax.swing.JFrame {
 
                     Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
                     jlabels[id].setBorder(grayBorder);
-//                    if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
-//                        int x = e.getXOnScreen();
-//                        int y = e.getYOnScreen();
-//                        IMG_OPTIONS.setLocation(x, y);
-//                        IMG_OPTIONS.setVisible(true);
-//                        Jlabel_OPTIONS_ID.setText("" + id);
-//                        //System.out.println("Right Worked");
-//                    }
+                    if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
+                        int x = e.getXOnScreen();
+                        int y = e.getYOnScreen();
+                        LABEL_OPTIONS.setLocation(x, y);
+                        LABEL_OPTIONS.setVisible(true);
+                        Jlabel_OPTIONS_LABEL_ID.setText("" + id);
+                    }
                 }
 
                 @Override
@@ -1075,7 +1299,7 @@ public class Main_Frame extends javax.swing.JFrame {
             Runnable run = new Runnable() {
                 @Override
                 public void run() {
-                    int jumlahSize = List_labels_type.size();
+                    int jumlahSize = List_jlabels_base_sample.size();
 //                    sum_Labels =jumlahSize;
                     if (sum_Labels <= 10) {
                         try {
@@ -1249,36 +1473,51 @@ public class Main_Frame extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Change_Color_Label;
+    private javax.swing.JPanel COLOR_PICKER_PANEL;
+    private javax.swing.JLabel Change_Color_IMG;
+    private javax.swing.JLabel Change_Color_LABEL;
     private javax.swing.JLabel Change_Color_Label1;
     private javax.swing.JPanel Choose_File_Panel;
     private javax.swing.JLabel EXIT_APP;
     private javax.swing.JPanel FILE_LABEL;
     private javax.swing.JPanel FILE_OPTIONS;
     private javax.swing.JLabel FILE_SAVE;
+    private javax.swing.JLabel FONTSTYLING_ID;
+    private javax.swing.JLabel Font_Styling_Label;
     private javax.swing.JPanel IMG_OPTIONS;
     private javax.swing.JLabel INSERT_LABEL;
     private javax.swing.JPanel INSERT_OPTIONS;
     private javax.swing.JLabel IN_CPU_METER_LABEL;
     private javax.swing.JLabel IN_RAM_METER_LABEL;
-    private javax.swing.JLabel Jlabel_OPTIONS_ID;
     private javax.swing.JLabel Jlabel_OPTIONS_ID1;
     private javax.swing.JLabel Jlabel_OPTIONS_ID2;
+    private javax.swing.JLabel Jlabel_OPTIONS_IMG_ID;
+    private javax.swing.JLabel Jlabel_OPTIONS_LABEL_ID;
+    private javax.swing.JPanel LABEL_OPTIONS;
     private javax.swing.JLabel Label_Drop_Image;
     private javax.swing.JLabel RESIZE_ID;
-    private javax.swing.JLabel RESIZE_LABEL;
+    private javax.swing.JLabel RESIZE_LABEL_IMG;
+    private javax.swing.JLabel SAVE_FONTSTYLING_LABEL;
     private javax.swing.JLabel SAVE_W_H_LABEL;
+    private javax.swing.JPanel SETFONTSIZE_DIALOG;
     private javax.swing.JPanel SETWIDTH_HEIGHT_DIALOG;
+    private javax.swing.JTextField SET_FONTSIZE_INPUT;
     private javax.swing.JTextField SET_HEIGHT_INPUT;
+    private javax.swing.JTextField SET_HEIGHT_INPUT1;
     private javax.swing.JTextField SET_WIDTH_INPUT;
     private javax.swing.JToggleButton checkCustomPath;
     private javax.swing.JPanel drop_zone_panel;
+    private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

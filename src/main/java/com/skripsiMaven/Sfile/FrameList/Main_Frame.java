@@ -7,6 +7,7 @@ package com.skripsiMaven.Sfile.FrameList;
 
 import com.skripsiMaven.Sfile.Script.Export_Script;
 import com.skripsiMaven.Sfile.Script.Options_Script;
+import com.skripsiMaven.Sfile.Script.import_Script;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -80,7 +81,8 @@ public class Main_Frame extends javax.swing.JFrame {
     private int sum_Labels = 0;
     List<Map<String, Object>> List_jlabels_statField_label = new ArrayList<Map<String, Object>>();
     List<Map<String, Object>> List_jlabels_base_sample = new ArrayList<Map<String, Object>>();
-
+    List<Map<String, Object>> List_Import_IMG_directory = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> List_Import_LABEL_directory = new ArrayList<Map<String, Object>>();
     JOptionPane alertBox = new JOptionPane();
     Options_Script opt = new Options_Script();
 
@@ -129,7 +131,7 @@ public class Main_Frame extends javax.swing.JFrame {
         checkCustomPath = new javax.swing.JToggleButton();
         FILE_OPTIONS = new javax.swing.JPanel();
         FILE_SAVE = new javax.swing.JLabel();
-        Change_Color_Label1 = new javax.swing.JLabel();
+        ChooseFileLabel = new javax.swing.JLabel();
         Jlabel_OPTIONS_ID1 = new javax.swing.JLabel();
         INSERT_OPTIONS = new javax.swing.JPanel();
         IN_RAM_METER_LABEL = new javax.swing.JLabel();
@@ -449,11 +451,11 @@ public class Main_Frame extends javax.swing.JFrame {
             }
         });
 
-        Change_Color_Label1.setForeground(new java.awt.Color(187, 225, 250));
-        Change_Color_Label1.setText("Choose File");
-        Change_Color_Label1.addMouseListener(new java.awt.event.MouseAdapter() {
+        ChooseFileLabel.setForeground(new java.awt.Color(187, 225, 250));
+        ChooseFileLabel.setText("Import Project");
+        ChooseFileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Change_Color_Label1MouseClicked(evt);
+                ChooseFileLabelMouseClicked(evt);
             }
         });
 
@@ -466,7 +468,7 @@ public class Main_Frame extends javax.swing.JFrame {
             .addGroup(FILE_OPTIONSLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(FILE_OPTIONSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Change_Color_Label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ChooseFileLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(FILE_SAVE, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
                     .addComponent(Jlabel_OPTIONS_ID1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -477,7 +479,7 @@ public class Main_Frame extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(FILE_SAVE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Change_Color_Label1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ChooseFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addComponent(Jlabel_OPTIONS_ID1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -865,13 +867,247 @@ public class Main_Frame extends javax.swing.JFrame {
         FILE_OPTIONS.setVisible(false);
     }//GEN-LAST:event_FILE_SAVEMouseClicked
 
-    private void Change_Color_Label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Change_Color_Label1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Change_Color_Label1MouseClicked
+    private void ChooseFileLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChooseFileLabelMouseClicked
+        if (jFileChooser1.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            System.out.println("getCurrentDirectory(): "
+                    + jFileChooser1.getCurrentDirectory());
+            System.out.println("getSelectedFile() : "
+                    + jFileChooser1.getSelectedFile());
+            import_Script import_sc = new import_Script(jFileChooser1.getSelectedFile());
+            import_sc.listFilesForFolder(jFileChooser1.getSelectedFile());
+            import_sc.ReadFileIni();
+            List_Import_IMG_directory = import_sc.getListDirectory();
+            List_Import_LABEL_directory = import_sc.getListLabel();
 
+            createImgFromImport(List_Import_IMG_directory);
+            createLabelFromImport(List_Import_LABEL_directory);
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_ChooseFileLabelMouseClicked
+    public void createLabelFromImport(final List<Map<String, Object>> label_list) {
+        for (int i = 0; i < label_list.size(); i++) {
+            Map<String, Object> label_file = label_list.get(i);
+            
+            Set_jlabel_Basic_Text((String) label_file.get("textType"), sum_Labels);
+            CreateLabelWithTextFromImport(
+                    sum_Labels,
+                    (int) label_file.get("fontsize"),
+                    (int) label_file.get("X"),
+                    (int) label_file.get("Y")
+            );
+             sum_Labels += 1;
+        }
+    }
+ public void CreateLabelWithTextFromImport(int id,int FONTSIZE,int XX, int YY) {
+        try {
+            Map<String, Object> jlabel_file_texts = List_jlabels_base_sample.get(id);
+            jlabels[id] = new JLabel("Label" + sum_Labels);
+            int fontSizeDefault = FONTSIZE;
+            Font defaultFont = new Font("Times New Roman", Font.PLAIN, fontSizeDefault);
+            switch (opt.ConvertObjectToString(jlabel_file_texts.get("textType"))) {
+                case "RAM":
+                    jlabels[id].setText("RAM");
+                    jlabels[id].setForeground(Color.red);
+                    jlabels[id].setFont(defaultFont);
+                    break;
+                case "CPU":
+                    jlabels[id].setText("CPU");
+                    jlabels[id].setForeground(Color.red);
+                    jlabels[id].setFont(defaultFont);
+                    break;
+                default:
+                    jlabels[id].setText("String Text");
+                    jlabels[id].setForeground(Color.red);
+                    jlabels[id].setBackground(Color.red);
+                // code block
+            }
+            int MaxWidth = (3 * fontSizeDefault);
+            int MaxHeight = (2 * fontSizeDefault) - 4;
+            jlabels[id].setBounds(100+XX, 100+YY, MaxWidth, MaxHeight);
+            this.AddXYWHFIC_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id, Color.red);
+            jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+            jlabels[id].addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    int x = e.getXOnScreen();
+                    int y = e.getYOnScreen();
+                    SetXYWHFIC_TEXT(jlabels[id].getX(), jlabels[id].getY(), MaxWidth, MaxHeight, fontSizeDefault, id, Color.red);
+                    jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                }
+            });
+            jlabels[id].addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
+                    jlabels[id].setBorder(grayBorder);
+                    if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
+                        int x = e.getXOnScreen();
+                        int y = e.getYOnScreen();
+                        LABEL_OPTIONS.setLocation(x, y);
+                        LABEL_OPTIONS.setVisible(true);
+                        Jlabel_OPTIONS_LABEL_ID.setText("" + id);
+                    }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    xImage_POS = e.getX();
+                    yImage_POS = e.getY();
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+            drop_zone_panel.add(jlabels[id]);
+            drop_zone_panel.validate();
+            drop_zone_panel.repaint();
+        } catch (Exception e) {
+        }
+    }
+    protected void createImgFromImport(final List<Map<String, Object>> files) {
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                int jumlahSize = List_jlabels_base_sample.size();
+                if (sum_Labels <= 10) {
+                    try {
+                        Label_Drop_Image.setText(null);
+                        System.out.println("Angka LIST LABEL: " + jumlahSize);
+                        System.out.println("files.size(): " + files.size());
+                        System.out.println("sum_Labels " + sum_Labels);
+                        if (sum_Labels == 0) {
+                            for (int i = 0; i < files.size(); i++) {
+                                Map<String, Object> file_img = files.get(i);
+                                Set_jlabel_Basic((File) file_img.get("Directory"), i);
+                                CreateLabelWithImageFromImport(
+                                        i,
+                                        (int) file_img.get("W"),
+                                        (int) file_img.get("H"),
+                                        (int) file_img.get("X"),
+                                        (int) file_img.get("Y")
+                                );
+                            }
+                            sum_Labels = files.size();
+                        } else {
+                            for (int i = sum_Labels; i < (sum_Labels + files.size()); i++) {
+                                Map<String, Object> file_img = files.get(i - sum_Labels);
+                                Set_jlabel_Basic((File) file_img.get("Directory"), i);
+                                System.out.println("ERR3");
+                                CreateLabelWithImageFromImport(
+                                        i,
+                                        (int) file_img.get("W"),
+                                        (int) file_img.get("H"),
+                                        (int) file_img.get("X"),
+                                        (int) file_img.get("Y")
+                                );
+                                System.out.println("ERR4");
+                            }
+                            sum_Labels += files.size();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    alertBox.showMessageDialog(jFrame1, "Maximum 10 image", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        };
+        SwingUtilities.invokeLater(run);
+    }
+
+    public void CreateLabelWithImageFromImport(int id, int Wid, int Hei, int XX, int YY) {
+        try {
+            BufferedImage img = null;
+
+            Map<String, Object> jlabel_file_img = List_jlabels_base_sample.get(id);
+            int TypeData = opt.ConvertObjectToInt(jlabel_file_img.get("typeData"));
+            File fileData = opt.ConvertObjectToFile(jlabel_file_img.get("filePath"));
+            String fileName = null;
+            if (TypeData == 1) {
+                fileName = fileData.getPath();
+            }
+
+            img = ImageIO.read(fileData);
+            int img_maxwidth = Wid;
+            int img_maxheight = Hei;
+            Image dimg = img.getScaledInstance(img_maxwidth, img_maxheight, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(dimg);
+            jlabels[id] = new JLabel("Label" + sum_Labels);
+            jlabels[id].setIcon(icon);
+            jlabels[id].setBounds(100 + XX, 100 + YY, img_maxwidth, img_maxheight);
+            this.AddXYWH_IMG(jlabels[id].getX(), jlabels[id].getY(), img_maxwidth, img_maxheight, id);
+            jlabels[id].setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+            jlabels[id].addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    int x = e.getXOnScreen();
+                    int y = e.getYOnScreen();
+                    SetXYWH_IMG(jlabels[id].getX(), jlabels[id].getY(), jlabels[id].getWidth(), jlabels[id].getHeight(), id);
+
+                    jlabels[id].setLocation((x - x2) - (xImage_POS - xMouseInDeskTopBackground), (y - y2) - (yImage_POS - yMouseInDeskTopBackground));
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                }
+            });
+            jlabels[id].addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    Border grayBorder = BorderFactory.createLineBorder(Color.GRAY, 2, true);
+                    jlabels[id].setBorder(grayBorder);
+                    if (SwingUtilities.isRightMouseButton(e) || e.isControlDown()) {
+                        int x = e.getXOnScreen();
+                        int y = e.getYOnScreen();
+                        IMG_OPTIONS.setLocation(x, y);
+                        IMG_OPTIONS.setVisible(true);
+                        Jlabel_OPTIONS_IMG_ID.setText("" + id);
+                    }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    xImage_POS = e.getX();
+                    yImage_POS = e.getY();
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+            drop_zone_panel.add(jlabels[id]);
+            drop_zone_panel.validate();
+            drop_zone_panel.repaint();
+        } catch (Exception e) {
+        }
+    }
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 // FILE_OPTIONS.setLocation(x, y);
-INSERT_OPTIONS.setVisible(false);
+        INSERT_OPTIONS.setVisible(false);
         FILE_OPTIONS.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
@@ -926,7 +1162,7 @@ INSERT_OPTIONS.setVisible(false);
         Color oldColor = opt.ConvertObjectToColor(jlabel_LABEL_STAT.get("FontColor"));
         int MaxWidth = (3 * fontSize);
         int MaxHeight = (2 * fontSize) - 4;
-        System.out.println("DTAA:"+MaxHeight+":?"+MaxWidth);
+        System.out.println("DTAA:" + MaxHeight + ":?" + MaxWidth);
         jlabels[jlabel_id].setBounds(X, Y, MaxWidth, MaxHeight);
         SetXYWHFIC_TEXT(X, Y, MaxWidth, MaxHeight, fontSize, jlabel_id, oldColor);
         drop_zone_panel.validate();
@@ -1478,7 +1714,7 @@ INSERT_OPTIONS.setVisible(false);
     private javax.swing.JPanel COLOR_PICKER_PANEL;
     private javax.swing.JLabel Change_Color_IMG;
     private javax.swing.JLabel Change_Color_LABEL;
-    private javax.swing.JLabel Change_Color_Label1;
+    private javax.swing.JLabel ChooseFileLabel;
     private javax.swing.JPanel Choose_File_Panel;
     private javax.swing.JLabel EXIT_APP;
     private javax.swing.JPanel FILE_LABEL;

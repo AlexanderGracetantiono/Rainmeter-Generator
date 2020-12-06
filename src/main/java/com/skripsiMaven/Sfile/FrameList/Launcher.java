@@ -638,15 +638,7 @@ public class Launcher extends javax.swing.JFrame {
         Panel_LabelAbout1.setText("How to use this app");
         jTextAreaAbout1.setText("Below is a guide on how to use the app, and what this app can do!");
     }//GEN-LAST:event_HelpLabelMouseClicked
-    public void listFilesForFolder(final File folder) {
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                listFilesForFolder(fileEntry);
-            } else {
-                System.out.println(fileEntry.getName());
-            }
-        }
-    }
+  
     private void EXIT_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EXIT_LABELMouseClicked
 //        int EXIT_RESPONSE = JOptionPane.showConfirmDialog(jPanel1, "Are you sure want to exit launcher ? ", "Yes, Confirm", JOptionPane.YES_NO_OPTION);
 //        if (EXIT_RESPONSE == JOptionPane.YES_OPTION) {

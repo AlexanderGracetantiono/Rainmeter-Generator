@@ -525,7 +525,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Change_Color_Label1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="ChooseFileLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="FILE_SAVE" alignment="0" pref="98" max="32767" attributes="0"/>
                           <Component id="Jlabel_OPTIONS_ID1" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -539,7 +539,7 @@
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="FILE_SAVE" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="Change_Color_Label1" min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="ChooseFileLabel" min="-2" pref="16" max="-2" attributes="0"/>
                       <EmptySpace pref="157" max="32767" attributes="0"/>
                       <Component id="Jlabel_OPTIONS_ID1" min="-2" pref="28" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -565,15 +565,15 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FILE_SAVEMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="Change_Color_Label1">
+            <Component class="javax.swing.JLabel" name="ChooseFileLabel">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="fa" green="e1" red="bb" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Choose File"/>
+                <Property name="text" type="java.lang.String" value="Import Project"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Change_Color_Label1MouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ChooseFileLabelMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="Jlabel_OPTIONS_ID1">

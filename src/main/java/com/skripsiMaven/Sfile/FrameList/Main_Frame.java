@@ -871,11 +871,13 @@ public class Main_Frame extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 // FILE_OPTIONS.setLocation(x, y);
+INSERT_OPTIONS.setVisible(false);
         FILE_OPTIONS.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void INSERT_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_INSERT_LABELMouseClicked
         INSERT_OPTIONS.setVisible(true);
+        FILE_OPTIONS.setVisible(false);
     }//GEN-LAST:event_INSERT_LABELMouseClicked
 
     private void IN_RAM_METER_LABELMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IN_RAM_METER_LABELMouseClicked

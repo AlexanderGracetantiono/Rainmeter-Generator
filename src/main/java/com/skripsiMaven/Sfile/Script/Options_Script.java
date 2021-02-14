@@ -39,7 +39,6 @@ public class Options_Script {
             img = ImageIO.read(new File( fileName));
         } catch (Exception e) {
         }
-//        Image dimg = img.getScaledInstance(W, H, Image.);
         Image dimg = img.getScaledInstance(W, H, Image.SCALE_DEFAULT);
         ImageIcon icon = new ImageIcon(dimg);
         return icon;

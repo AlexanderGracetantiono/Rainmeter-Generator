@@ -59,7 +59,6 @@ public class Export_Script {
 
     public void CreateDirectory() {
         try {
-//            String file_address = "C:/file/" + this.namaID + "/@Resources/Images/";
             Path path1 = Paths.get(this.dir_Path + this.namaID + "/@Resources/Images");
             Path path2 = Paths.get(this.dir_Path + this.namaID + "/" + this.namaFolder);
             Files.createDirectories(path1);
@@ -79,12 +78,11 @@ public class Export_Script {
         try {
             iniFile.createNewFile();
             Wini ini = new Wini(iniFile);
-            // Image File
-//            System.out.println("PRINT WH: " + label_stat.get("W") + " H: " + label_stat.get("H"));
+            System.out.println("DATA LABE: EXP:"+label_stat);
             ini.put("ICON" + iconName, "Meter", "Image");
             ini.put("ICON" + iconName, "ImageName", "#@#Images/" + iconName + ".png");
-            ini.put("ICON" + iconName, "W", label_stat.get("W") + "*(#scale#)");
-            ini.put("ICON" + iconName, "H", label_stat.get("H") + "*(#scale#)");
+            ini.put("ICON" + iconName, "W", label_stat.get("W"));
+            ini.put("ICON" + iconName, "H", label_stat.get("H"));
             ini.put("ICON" + iconName, "X", Xcoordinate);
             ini.put("ICON" + iconName, "Y", Ycoordinate);
             ini.put("ICON" + iconName, "AntiAlias", "Image");
@@ -97,11 +95,9 @@ public class Export_Script {
     public void PutCPUMeasure(String MeasureName, int Xcoordinate, int Ycoordinate, Map<String, Object> label_stat) {
         String file_address = this.dir_Path + this.namaID + "/" + this.namaFolder;
         File iniFile = new File(file_address + "\\" + this.file_name + ".ini");
-        System.out.println("ERR16");
         try {
             iniFile.createNewFile();
             Wini ini = new Wini(iniFile);
-            System.out.println("ERR17");
             int fontSize = ConvertObjectToInt(label_stat.get("FontSize"));
             String MeasureName1 = "Measure" + MeasureName;
             String MeasureNameString = "Measure" + MeasureName + "String";
@@ -114,12 +110,10 @@ public class Export_Script {
             ini.put(MeasureNameString, "FontFace", "Times New Roman");
             ini.put(MeasureNameString, "FontSize", fontSize);
             ini.put(MeasureNameString, "FontColor", "FFFFFF");
-//            ini.put(MeasureNameString, "StringAlign", "CenterCenter");
             ini.put(MeasureNameString, "X", Xcoordinate);
             ini.put(MeasureNameString, "Y", Ycoordinate);
             ini.put(MeasureNameString, "AntiAlias", 1);
             ini.put(MeasureNameString, "Autoscale", 1);
-
             ini.store();
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -129,11 +123,9 @@ public class Export_Script {
     public void PutRAMMeasure(String MeasureName, int Xcoordinate, int Ycoordinate, Map<String, Object> label_stat) {
         String file_address = this.dir_Path + this.namaID + "/" + this.namaFolder;
         File iniFile = new File(file_address + "\\" + this.file_name + ".ini");
-        System.out.println("ERR16");
         try {
             iniFile.createNewFile();
             Wini ini = new Wini(iniFile);
-            System.out.println("ERR17");
             int fontSize = ConvertObjectToInt(label_stat.get("FontSize"));
             String MeasureName1 = "Measure" + MeasureName + "Used";
             String MeasureName2 = "Measure" + MeasureName + "Total";
@@ -155,7 +147,34 @@ public class Export_Script {
             ini.put(MeasureNameString, "FontFace", "Times New Roman");
             ini.put(MeasureNameString, "FontSize", fontSize);
             ini.put(MeasureNameString, "FontColor", "FFFFFF");
-//            ini.put(MeasureNameString, "StringAlign", "CenterCenter");
+            ini.put(MeasureNameString, "X", Xcoordinate);
+            ini.put(MeasureNameString, "Y", Ycoordinate);
+            ini.put(MeasureNameString, "AntiAlias", 1);
+            ini.put(MeasureNameString, "Autoscale", 1);
+            ini.store();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void PutDownloadMeasure(String MeasureName, int Xcoordinate, int Ycoordinate, Map<String, Object> label_stat) {
+        String file_address = this.dir_Path + this.namaID + "/" + this.namaFolder;
+        File iniFile = new File(file_address + "\\" + this.file_name + ".ini");
+        try {
+            iniFile.createNewFile();
+            Wini ini = new Wini(iniFile);
+            int fontSize = ConvertObjectToInt(label_stat.get("FontSize"));
+            String MeasureName1 = "Measure" + MeasureName + "Download";
+            String MeasureNameString = "Measure" + MeasureName + "String";
+
+            ini.put(MeasureName1, "Measure", "NetIn");
+
+            ini.put(MeasureNameString, "Meter", "String");
+            ini.put(MeasureNameString, "MeasureName", MeasureName1);
+            ini.put(MeasureNameString, "Text", "%1%");
+            ini.put(MeasureNameString, "FontFace", "Times New Roman");
+            ini.put(MeasureNameString, "FontSize", fontSize);
+            ini.put(MeasureNameString, "FontColor", "FFFFFF");
             ini.put(MeasureNameString, "X", Xcoordinate);
             ini.put(MeasureNameString, "Y", Ycoordinate);
             ini.put(MeasureNameString, "AntiAlias", 1);
@@ -179,18 +198,7 @@ public class Export_Script {
             ini.put("Variables", "ImageW", 100);
             ini.put("Variables", "ImageH", 100);
             ini.put("Variables", "Scale", 1);
-            // Image File
-//            ini.put("Frame", "Meter", "Image");
-//            ini.put("Frame", "ImageName", "#@#Images/" + "IconA.png");
-//            ini.put("Frame", "W", "(#ImageW#*#scale#)");
-//            ini.put("Frame", "H", "(#ImageH#*#scale#)");
-//            ini.put("Frame", "AntiAlias", "Image");
-//            ini.put("Frame", "Greyscale", "Image");
-//            ini.put("Frame", "ImageTint", "Image");
-
             ini.store();
-            // To catch basically any error related to writing to the file
-            // (The system cannot find the file specified)
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -204,10 +212,6 @@ public class Export_Script {
     ) {
         Options_Script opt = new Options_Script();
         for (int i = 0; i < sum_Labels; i++) {
-//            Map<String, Object> label_types = List_LabelsType.get(i);
-//            int label_type = opt.ConvertObjectToInt(label_types.get("typeData"));
-//            if (label_type == 1) {
-
             Map<String, Object> label_stat_label = List_label_STATLABEL.get(i);
             int X_COOR = opt.ConvertObjectToInt(label_stat_label.get("X"));
             int Y_COOR = opt.ConvertObjectToInt(label_stat_label.get("Y"));
@@ -222,17 +226,6 @@ public class Export_Script {
                     min_y_coord = Y_COOR;
                 }
             }
-//            } else if (label_type == 2) {
-//                Map<String, Object> label_stat_text = List_label_STATLABEL.get(i);
-//                int X_COOR = ConvertObjectToInt(label_stat_text.get("X"));
-//                int Y_COOR = ConvertObjectToInt(label_stat_text.get("Y"));
-//                if (X_COOR < min_x_coord) {
-//                    min_x_coord = X_COOR;
-//                }
-//                if (Y_COOR < min_y_coord) {
-//                    min_y_coord = Y_COOR;
-//                }
-//            }
         }
     }
 
@@ -248,7 +241,7 @@ public class Export_Script {
     ) {
         Options_Script opt = new Options_Script();
         CheckingCoordinat(List_label_STATLABEL, sum_Labels);
-//        String path_local = "src/images/";
+        System.out.println("Jumlah Label: " + sum_Labels + " sizestat: " + List_label_STATLABEL.size() + " sizeLab:" + List_Labels.size());
         String file_address = this.dir_Path + this.namaID + "/@Resources/Images/";
         int Basex = min_x_coord;
         int Basey = min_y_coord;
@@ -257,9 +250,6 @@ public class Export_Script {
             for (int i = 0; i < sum_Labels; i++) {
                 Map<String, Object> labels_data = List_Labels.get(i);
                 int label_type = opt.ConvertObjectToInt(labels_data.get("typeData"));
-                // 1 for image
-                // 2 for label
-                // Start for Image
                 if (label_type == 1) {
                     Map<String, Object> label_stat = List_label_STATLABEL.get(i);
                     FileOutputStream out = null;
@@ -267,9 +257,7 @@ public class Export_Script {
                     int cursor;
                     String file_Name_dest = "Icon" + i;
                     in = new FileInputStream(opt.ConvertObjectToFile(labels_data.get("filePath")));
-//                System.out.println("ERR1");
                     out = new FileOutputStream(file_address + file_Name_dest + ".png");
-//                System.out.println("ERR2");
                     System.out.println("IMAGE X:Y " + label_stat.get("X") + " : " + label_stat.get("Y"));
                     while ((cursor = in.read()) != -1) {
                         out.write(cursor);
@@ -278,13 +266,10 @@ public class Export_Script {
                     int CoorY = ConvertObjectToInt(label_stat.get("Y"));
                     if ((min_x_coord == CoorX) && (min_y_coord == CoorY)) {
                         PutManyIcons(file_Name_dest, 0, 0, label_stat);
-//                    System.out.println("ERR3");
                     } else {
                         int Xcoor = CoorX - Basex;
                         int Ycoor = CoorY - Basey;
                         PutManyIcons(file_Name_dest, Xcoor, Ycoor, label_stat);
-//                    System.out.println("ERR3");
-
                     }
                 } // Start for Labels
                 else if (label_type == 2) {
@@ -314,11 +299,22 @@ public class Export_Script {
                                 PutCPUMeasure(file_Name_dest, Xcoor, Ycoor, label_stat);
                             }
                             break;
+                        case "DOWN":
+                            file_Name_dest = "DOWN" + i;
+                            if ((min_x_coord == CoorX) && (min_y_coord == CoorY)) {
+                                PutDownloadMeasure(file_Name_dest, 0, 0, label_stat);
+                            } else {
+                                int Xcoor = CoorX - Basex;
+                                int Ycoor = CoorY - Basey;
+                                PutDownloadMeasure(file_Name_dest, Xcoor, Ycoor, label_stat);
+                            }
+                            break;
                         default:
                         // code block
                     }
 
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

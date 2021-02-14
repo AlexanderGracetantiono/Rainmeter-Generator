@@ -121,6 +121,7 @@
                           <Component id="Change_Color_IMG" pref="108" max="32767" attributes="0"/>
                           <Component id="RESIZE_LABEL_IMG" max="32767" attributes="0"/>
                           <Component id="Jlabel_OPTIONS_IMG_ID" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Delete_image" alignment="0" pref="108" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -133,7 +134,9 @@
                       <Component id="RESIZE_LABEL_IMG" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Change_Color_IMG" min="-2" pref="16" max="-2" attributes="0"/>
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Delete_image" min="-2" pref="16" max="-2" attributes="0"/>
+                      <EmptySpace pref="40" max="32767" attributes="0"/>
                       <Component id="Jlabel_OPTIONS_IMG_ID" min="-2" pref="28" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -170,6 +173,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="jlabelID"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Delete_image">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="fa" green="e1" red="bb" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Delete Image"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Delete_imageMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -609,7 +623,8 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="IN_RAM_METER_LABEL" alignment="0" max="32767" attributes="0"/>
                           <Component id="Jlabel_OPTIONS_ID2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="IN_CPU_METER_LABEL" alignment="1" pref="158" max="32767" attributes="0"/>
+                          <Component id="IN_CPU_METER_LABEL" alignment="1" max="32767" attributes="0"/>
+                          <Component id="IN_Download_METER_LABEL" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -622,7 +637,9 @@
                       <Component id="IN_RAM_METER_LABEL" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="IN_CPU_METER_LABEL" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="154" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="IN_Download_METER_LABEL" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="126" max="32767" attributes="0"/>
                       <Component id="Jlabel_OPTIONS_ID2" min="-2" pref="28" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -667,6 +684,20 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="IN_CPU_METER_LABELMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="IN_Download_METER_LABEL">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="fa" green="e1" red="bb" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Insert Download Meter"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="IN_Download_METER_LABELMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

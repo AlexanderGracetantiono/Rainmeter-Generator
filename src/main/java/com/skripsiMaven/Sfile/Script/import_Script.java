@@ -64,7 +64,6 @@ public class import_Script {
                     jlabels_stat.put("Name", fileEntry.getName());
                     jlabels_stat.put("Directory", fileEntry);
                     List_IMG_W_Directory.add(a, jlabels_stat);
-                    System.out.println(fileEntry.getName());
                 } else {
                     if (once == 0) {
                         Map<String, Object> jlabels_stat = new HashMap<>();
@@ -79,10 +78,6 @@ public class import_Script {
     }
 
     public List<Map<String, Object>> getListDirectory() {
-        for (int i = 0; i < List_IMG_W_Directory.size(); i++) {
-            Map<String, Object> directory_file = List_IMG_W_Directory.get(i);
-            System.out.println(directory_file.get("Type"));
-        }
         return List_IMG_W_Directory;
 
     }
@@ -111,7 +106,6 @@ public class import_Script {
                         int label_fontsize = ini.get(Measure_name, "FontSize", int.class);
                         int label_x = ini.get(Measure_name, "X", int.class);
                         int label_y = ini.get(Measure_name, "Y", int.class);
-                        System.out.println("");
                         Map<String, Object> jlabels_stat = new HashMap<>();
                         jlabels_stat.put("textType", "RAM");
                         jlabels_stat.put("fontsize", label_fontsize);
@@ -144,7 +138,6 @@ public class import_Script {
                 int img_height = ini.get("ICON" + ICON_Name, "H", int.class);
                 int img_x = ini.get("ICON" + ICON_Name, "X", int.class);
                 int img_y = ini.get("ICON" + ICON_Name, "Y", int.class);
-
                 Map<String, Object> jlabels_stat = new HashMap<>();
                 jlabels_stat.put("Name", directory_IMG.get("Name"));
                 jlabels_stat.put("Directory", directory_IMG.get("Directory"));
@@ -155,7 +148,7 @@ public class import_Script {
                 List_IMG_W_Directory.set(i, jlabels_stat);
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("Error Message:"+e.getMessage());
         }
     }
 }
